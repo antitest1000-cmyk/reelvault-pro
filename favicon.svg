@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="favGbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B3D" />
+      <stop offset="100%" stop-color="#FF3E24" />
+    </linearGradient>
+    <linearGradient id="favBgDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#151C2C" />
+      <stop offset="100%" stop-color="#090D16" />
+    </linearGradient>
+  </defs>
+
+  <!-- Clean Rounded Base -->
+  <rect x="16" y="16" width="480" height="480" rx="128" fill="url(#favBgDark)" stroke="url(#favGbGrad)" stroke-width="16" />
+
+  <!-- Bold Minimalist Geometric "G" Mark -->
+  <path d="M 352 192 
+           C 328 144 280 120 224 120 
+           C 144 120 96 176 96 256 
+           C 96 336 144 392 224 392 
+           C 288 392 344 360 360 296 
+           L 360 272 
+           L 224 272" 
+        fill="none" 
+        stroke="url(#favGbGrad)" 
+        stroke-width="52" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" />
+
+  <!-- Play / Download arrow inside the G -->
+  <polygon points="272,240 320,272 272,304" fill="#FFFFFF" />
+</svg>

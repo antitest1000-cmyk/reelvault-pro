@@ -75,9 +75,9 @@ bundles.forEach((bundle, index) => {
   const fallbackThumb = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80";
   const thumbUrl = bundle.thumbnail_url || fallbackThumb;
 
-  const BASE_URL = (process.env.SITE_URL || 'https://reelvault.store').replace(/\/+$/, '');
+  const BASE_URL = (process.env.SITE_URL || 'https://reels-bundlee.netlify.app').replace(/\/+$/, '');
   const pageUrl = `${BASE_URL}/bundle/${slug}.html`;
-  const sharePromoText = `🔥 Check out "${bundle.title}" (${reelsCountFormatted}+ Reels) on ReelVault PRO for ₹${priceNum}! Instant Google Drive download:`;
+  const sharePromoText = `🔥 Check out "${bundle.title}" (${reelsCountFormatted}+ Reels) on Get Bundle for ₹${priceNum}! Instant Google Drive download:`;
   const igDmUrl = `https://ig.me/m/giveme_8`;
 
   // Select 4 random diverse bundles for "You May Also Like"
@@ -122,7 +122,7 @@ bundles.forEach((bundle, index) => {
     "mpn": bundle.id,
     "brand": {
       "@type": "Brand",
-      "name": "ReelVault PRO"
+      "name": "Get Bundle"
     },
     "offers": {
       "@type": "Offer",
@@ -134,7 +134,7 @@ bundles.forEach((bundle, index) => {
       "availability": "https://schema.org/InStock",
       "seller": {
         "@type": "Organization",
-        "name": "ReelVault PRO",
+        "name": "Get Bundle",
         "sameAs": "https://instagram.com/giveme_8"
       }
     },
@@ -180,7 +180,7 @@ bundles.forEach((bundle, index) => {
         "name": "What if the Google Drive download link expires or stops working?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": `All ReelVault PRO bundles come with a lifetime replacement guarantee. If a cloud link ever breaks, message us on Instagram @giveme_8 with your bundle ID, and we will refresh your link within minutes.`
+          "text": `All Get Bundle collections come with a lifetime replacement guarantee. If a cloud link ever breaks, message us on Instagram @giveme_8 with your bundle ID, and we will refresh your link within minutes.`
         }
       }
     ]
@@ -191,13 +191,14 @@ bundles.forEach((bundle, index) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(bundle.title)} | ${reelsCountFormatted}+ Viral Reels Bundle</title>
+  <title>${escapeHtml(bundle.title)} | ${reelsCountFormatted}+ Reels - Get Bundle</title>
   <meta name="description" content="Download ${escapeHtml(bundle.title)} featuring ${reelsCountFormatted}+ viral 9:16 MP4 reels for Instagram & Shorts in the ${escapeHtml(bundle.category)} niche. Instant Google Drive delivery for ₹${priceNum}.">
+  <meta name="google-site-verification" content="GAFtxEepvYnQvF145-T8hoBJyJY-FzdSeld5MOmTUk0">
   <link rel="canonical" href="${pageUrl}">
   
   <!-- Open Graph / WhatsApp / Instagram Previews (Enhanced Appearance) -->
   <meta property="og:type" content="product">
-  <meta property="og:site_name" content="ReelVault PRO">
+  <meta property="og:site_name" content="Get Bundle">
   <meta property="og:title" content="${escapeHtml(bundle.title)} – ${reelsCountFormatted}+ Viral 4K Reels (₹${priceNum})">
   <meta property="og:description" content="⚡ ${reelsCountFormatted}+ ready-to-post vertical 9:16 reels in ${escapeHtml(bundle.category)}. Full 1080x1920 HD/4K with royalty-free audio & 100% commercial rights. Instant Google Drive download for ₹${priceNum}!">
   <meta property="og:image" content="${escapeHtml(thumbUrl)}">
@@ -232,6 +233,15 @@ bundles.forEach((bundle, index) => {
   <!-- Schema.org FAQPage JSON-LD (AEO & Featured Snippets) -->
   <script type="application/ld+json">
   ${JSON.stringify(faqSchema, null, 2)}
+  </script>
+
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <meta name="theme-color" content="#FF5E36">
+
   <!-- Anti-Flash Dark Theme Script (Default Dark) -->
   <script>
     (function() {
@@ -266,8 +276,9 @@ bundles.forEach((bundle, index) => {
   <header class="etsy-header">
     <div class="container etsy-header-inner">
       <div class="etsy-header-left">
-        <a href="../index.html" class="etsy-brand" aria-label="ReelVault PRO Home">
-          <span class="brand-text">ReelVault<strong style="color: var(--accent-orange);">PRO</strong></span>
+        <a href="../index.html" class="etsy-brand" aria-label="Get Bundle Home">
+          <img src="../logo-icon.svg" alt="Get Bundle" class="brand-logo-img" width="36" height="36">
+          <span class="brand-text">Get <strong style="color: var(--accent-orange);">Bundle</strong></span>
         </a>
       </div>
       
@@ -342,12 +353,12 @@ bundles.forEach((bundle, index) => {
           <i class="fa-solid fa-fire"></i> Best Seller in ${escapeHtml(bundle.category)}
         </div>
 
-        <h1 class="subpage-title" style="font-size: 2.2rem; margin-bottom: 0.75rem; line-height: 1.25;">
+        <h1 class="subpage-title" style="font-size: clamp(1.4rem, 1.1rem + 1.8vw, 2.2rem); margin-bottom: 0.75rem; line-height: 1.25; word-break: break-word; overflow-wrap: anywhere;">
           ${escapeHtml(bundle.title)}
         </h1>
 
         <!-- Star Rating -->
-        <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 1.25rem;">
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.45rem 0.65rem; margin-bottom: 1.25rem;">
           <div style="color: var(--star-fill); font-size: 1.05rem;">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
@@ -614,7 +625,7 @@ bundles.forEach((bundle, index) => {
           <div class="footer-brand-header">
             <div class="footer-logo">
               <i class="fa-solid fa-layer-group"></i>
-              <span>ReelVault<strong style="color: var(--accent-orange);">PRO</strong></span>
+              <span>Get <strong style="color: var(--accent-orange);">Bundle</strong></span>
             </div>
             <span class="footer-pill-tag"><i class="fa-solid fa-circle-check"></i> India's #1 Reels Store</span>
           </div>
@@ -668,7 +679,7 @@ bundles.forEach((bundle, index) => {
       </div>
 
       <div class="footer-bottom-bar">
-        <div class="footer-copyright">&copy; 2026 <strong>ReelVault PRO</strong>. All rights reserved. Built for content creators & agencies.</div>
+        <div class="footer-copyright">&copy; 2026 <strong>Get Bundle</strong>. All rights reserved. Built for content creators & agencies.</div>
         <a href="../index.html" class="footer-back-to-top"><span>Return to Storefront</span> <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
@@ -688,7 +699,7 @@ bundles.forEach((bundle, index) => {
   <script>
     const bundleUrl = (typeof window !== "undefined" && window.location.href) ? window.location.href : "${pageUrl}";
     const shareTitle = "${escapeHtml(bundle.title)}";
-    const shareText = "🔥 Check out " + shareTitle + " (${reelsCountFormatted}+ Reels) on ReelVault PRO for ₹${priceNum}! Instant Google Drive download:";
+    const shareText = "🔥 Check out " + shareTitle + " (${reelsCountFormatted}+ Reels) on Get Bundle for ₹${priceNum}! Instant Google Drive download:";
 
     // Dynamically synchronize social share buttons with the active live domain
     try {
@@ -724,7 +735,7 @@ bundles.forEach((bundle, index) => {
       if (navigator.share) {
         try {
           await navigator.share({
-            title: shareTitle + " - ReelVault PRO",
+            title: shareTitle + " - Get Bundle",
             text: shareText,
             url: bundleUrl
           });

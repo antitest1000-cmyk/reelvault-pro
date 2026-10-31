@@ -30,7 +30,7 @@ const CONFIG = {
   CLOUDINARY_FOLDER: "reel_bundle_thumbnails",
 
   // Store Brand Info
-  STORE_NAME: "ReelVault PRO",
+  STORE_NAME: "Get Bundle",
   CURRENCY_SYMBOL: "₹"
 };
 

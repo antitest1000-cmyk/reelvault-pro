@@ -1,12 +1,12 @@
 /**
  * generate-sitemap.js
- * Builds a comprehensive, compliant sitemap.xml for ReelVault PRO
+ * Builds a comprehensive, compliant sitemap.xml for Get Bundle
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const baseUrl = (process.env.SITE_URL || 'https://reelvault.store').replace(/\/+$/, '');
+const baseUrl = (process.env.SITE_URL || 'https://reels-bundlee.netlify.app').replace(/\/+$/, '');
 const today = new Date().toISOString().split('T')[0];
 
 const staticPages = [

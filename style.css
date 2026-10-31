@@ -124,6 +124,10 @@ html {
   background-color: var(--bg-page);
   color: var(--text-primary);
   transition: var(--transition-theme);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -134,8 +138,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100dvh;
-  overflow-x: clip;
   overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 h1, h2, h3, h4 {
@@ -148,6 +155,7 @@ h1, h2, h3, h4 {
 a {
   color: inherit;
   text-decoration: none;
+  touch-action: manipulation;
 }
 
 button {
@@ -156,13 +164,16 @@ button {
   background: none;
   cursor: pointer;
   outline: none;
+  touch-action: manipulation;
 }
 
 input, select, textarea {
   font-family: var(--font-sans);
+  font-size: 1rem; /* 16px prevents iOS Safari auto-zoom on focus */
+  touch-action: manipulation;
 }
 
-img {
+img, video, svg, canvas, iframe {
   max-width: 100%;
   height: auto;
   display: block;
@@ -308,27 +319,39 @@ img {
 
 @media (max-width: 768px) {
   .etsy-top-bar {
-    padding: 0.4rem 0;
+    padding: 0.35rem 0;
+    overflow: hidden;
+    max-width: 100%;
   }
   .etsy-top-bar-inner {
-    justify-content: flex-start;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 0.75rem;
+    justify-content: center;
+    gap: 0.5rem;
     flex-wrap: nowrap;
-  }
-  .etsy-top-bar-inner::-webkit-scrollbar {
-    display: none;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
   }
   .top-bar-left {
     display: inline-flex;
-    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.76rem;
   }
   .top-bar-right {
-    gap: 0.65rem;
-    font-size: 0.76rem;
-    flex-shrink: 0;
+    display: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .top-bar-text {
+    display: none !important;
+  }
+  .top-bar-right {
+    display: none !important;
   }
 }
 
@@ -359,13 +382,36 @@ img {
   font-family: var(--font-display);
   font-size: 1.85rem;
   font-weight: 800;
-  color: var(--accent-orange);
+  color: var(--text-primary);
   letter-spacing: -0.5px;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.55rem;
   user-select: none;
   flex-shrink: 0;
+  text-decoration: none;
+}
+
+.etsy-brand-logo .brand-accent,
+.etsy-brand-logo strong {
+  color: var(--accent-orange);
+}
+
+.brand-logo-img {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  object-fit: contain;
+  border-radius: 9px;
+  display: inline-block;
+  vertical-align: middle;
+  filter: drop-shadow(0 2px 8px rgba(255, 94, 54, 0.4));
+  transition: transform 0.2s ease;
+}
+
+.etsy-brand-logo:hover .brand-logo-img {
+  transform: scale(1.06) rotate(-2deg);
 }
 
 .etsy-brand-logo small {
@@ -976,8 +1022,8 @@ img {
   margin-bottom: 3.5rem;
 }
 
-/* Tablet & Compact Screens */
-@media (max-width: 1024px) and (min-width: 769px) {
+/* Tablet & Compact Screens (641px to 1024px: 3 columns) */
+@media (max-width: 1024px) and (min-width: 641px) {
   .etsy-products-grid, .product-grid, .etsy-product-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
@@ -985,20 +1031,20 @@ img {
   }
 }
 
-/* Mobile Phones (3 Grids Layout - Instagram Explore Style) */
-@media (max-width: 768px) {
+/* Mobile Phones (up to 640px: clean, high-retention 2-column grid) */
+@media (max-width: 640px) {
   .etsy-products-grid, .product-grid, .etsy-product-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 8px !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
     margin-bottom: 2rem;
   }
 }
 
-/* Extra Small Screens under 330px: 2 columns */
-@media (max-width: 330px) {
+/* Extra Small Screens under 320px: 1 column */
+@media (max-width: 320px) {
   .etsy-products-grid, .product-grid, .etsy-product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 6px !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
   }
 }
 
@@ -3362,14 +3408,19 @@ input:checked + .switch-slider:before {
 /* Responsive Overrides for Subpages */
 @media (max-width: 960px) {
   .bundle-detail-layout {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+  .bundle-sticky-media,
+  .bundle-detail-info {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
   }
   .bundle-sticky-media {
-    position: static;
-    max-width: 520px;
-    margin: 0 auto 1.5rem;
-    width: 100%;
+    position: static !important;
+    max-width: 520px !important;
+    margin: 0 auto 1.5rem auto !important;
   }
   .tools-grid {
     grid-template-columns: 1fr;
@@ -3387,18 +3438,21 @@ input:checked + .switch-slider:before {
 
 @media (max-width: 600px) {
   .subpage-container {
-    padding: 1.5rem 1rem 3.5rem;
+    padding: 1rem 0.75rem 3.5rem !important;
   }
   .bundle-sticky-media {
-    max-width: 100%;
-    padding: 0.65rem;
-    border-radius: var(--radius-md);
+    max-width: 100% !important;
+    padding: 0.65rem !important;
+    border-radius: var(--radius-md) !important;
   }
   .bundle-detail-info .subpage-title {
-    font-size: 1.65rem !important;
+    font-size: clamp(1.35rem, 1.1rem + 1.6vw, 1.85rem) !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
   }
   .bundle-price-row .price-current {
-    font-size: 1.8rem !important;
+    font-size: 1.65rem !important;
   }
   .bundle-specs-grid {
     gap: 0.5rem;
@@ -3409,10 +3463,37 @@ input:checked + .switch-slider:before {
   .bundle-spec-val {
     font-size: 1.1rem;
   }
+  .btn-etsy-big-add {
+    font-size: 0.98rem !important;
+    padding: 0.85rem 1rem !important;
+  }
+  /* Table mobile restack: turn table rows into clean cards on mobile so wide content never overflows */
+  .quick-facts-table,
+  .quick-facts-table tbody,
+  .quick-facts-table tr,
   .quick-facts-table th,
   .quick-facts-table td {
-    padding: 0.65rem 0.75rem;
-    font-size: 0.85rem;
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .quick-facts-table tr {
+    margin-bottom: 0.6rem;
+    padding: 0.65rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+  }
+  .quick-facts-table th {
+    font-weight: 800;
+    color: var(--text-primary);
+    padding: 0 0 0.25rem 0 !important;
+    border: none !important;
+  }
+  .quick-facts-table td {
+    color: var(--text-secondary);
+    padding: 0 !important;
+    border: none !important;
   }
 }
 
@@ -3863,157 +3944,160 @@ input:checked + .switch-slider:before {
 
   /* Compact Container Padding on Mobile */
   .container {
-    padding: 0 0.65rem !important;
+    padding: 0 0.75rem !important;
   }
 
-  /* Compact 3-Grid Bundle Cards (Instagram Explore Tile Style) */
+  /* 2-Grid Bundle Cards for Mobile (High readability, Google-friendly tap targets) */
   .etsy-products-grid, .product-grid, .etsy-product-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 8px !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
     margin-bottom: 2rem !important;
   }
 
   .bundle-card, .etsy-card {
-    padding: 0.35rem 0.35rem 0.45rem 0.35rem !important;
-    border-radius: 10px !important;
+    padding: 0.55rem 0.55rem 0.65rem 0.55rem !important;
+    border-radius: 12px !important;
     border: 1px solid var(--border-subtle) !important;
     background: var(--bg-card) !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22) !important;
+    display: flex !important;
+    flex-direction: column !important;
     touch-action: manipulation;
   }
 
   .bundle-card:hover, .etsy-card:hover {
     transform: none !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22) !important;
   }
 
   .bundle-card-media, .etsy-card-media {
     aspect-ratio: 1 / 1 !important;
-    border-radius: 7px !important;
-    margin-bottom: 0.35rem !important;
+    border-radius: 9px !important;
+    margin-bottom: 0.45rem !important;
     overflow: hidden !important;
     position: relative !important;
     background: var(--media-bg) !important;
   }
 
-  /* Mini Corner Badges on 3-Grid */
+  /* Corner Badges on 2-Grid */
   .badge-card-corner {
-    top: 0.25rem !important;
-    left: 0.25rem !important;
-    font-size: 0.52rem !important;
+    top: 0.35rem !important;
+    left: 0.35rem !important;
+    font-size: 0.62rem !important;
     font-weight: 800 !important;
-    padding: 0.12rem 0.3rem !important;
-    border-radius: 4px !important;
-    gap: 0.15rem !important;
+    padding: 0.16rem 0.4rem !important;
+    border-radius: 5px !important;
+    gap: 0.2rem !important;
     letter-spacing: 0.2px !important;
-    line-height: 1.1 !important;
+    line-height: 1.15 !important;
   }
 
   .badge-card-corner i {
-    font-size: 0.48rem !important;
+    font-size: 0.58rem !important;
   }
 
-  /* Mini Wishlist Heart Button */
+  /* Wishlist Heart Button - Full touch-friendly size */
   .btn-card-favorite {
-    top: 0.25rem !important;
-    right: 0.25rem !important;
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    max-width: 24px !important;
-    max-height: 24px !important;
+    top: 0.35rem !important;
+    right: 0.35rem !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
     aspect-ratio: 1 / 1 !important;
     border-radius: 50% !important;
     padding: 0 !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 0.68rem !important;
+    font-size: 0.85rem !important;
     background: rgba(11, 15, 23, 0.85) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
   }
 
-  /* Hide floating share icon in 3-grid tile to keep image clean */
+  /* Hide floating share icon in mobile card */
   .btn-card-share-float {
     display: none !important;
   }
 
-  /* Compact Card Meta (Category & Reels Tag) */
+  /* Card Meta (Category & Reels Tag) */
   .bundle-card-meta {
-    margin-bottom: 0.15rem !important;
-    gap: 0.2rem !important;
+    margin-bottom: 0.25rem !important;
+    gap: 0.3rem !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
   }
 
   .bundle-category-tag {
-    font-size: 0.58rem !important;
+    font-size: 0.66rem !important;
     font-weight: 700 !important;
     letter-spacing: 0.2px !important;
-    max-width: 62px !important;
+    max-width: 95px !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
   }
 
   .bundle-reels-tag {
-    font-size: 0.55rem !important;
-    padding: 0.08rem 0.22rem !important;
-    border-radius: 3px !important;
+    font-size: 0.64rem !important;
+    padding: 0.1rem 0.35rem !important;
+    border-radius: 4px !important;
     white-space: nowrap !important;
   }
 
   /* Card Title: 2 lines clamp with legible font size */
   .bundle-card-title, .etsy-card-title {
-    font-size: 0.74rem !important;
+    font-size: 0.86rem !important;
     font-weight: 700 !important;
-    line-height: 1.25 !important;
-    margin: 0.12rem 0 0.22rem 0 !important;
-    min-height: 1.85rem !important;
+    line-height: 1.3 !important;
+    margin: 0.2rem 0 0.3rem 0 !important;
+    min-height: 2.25rem !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
   }
 
-  /* Compact Rating: 1 Star + score */
+  /* Rating Row */
   .bundle-rating-row, .etsy-rating-row {
-    font-size: 0.65rem !important;
-    margin-bottom: 0.25rem !important;
-    gap: 0.15rem !important;
+    font-size: 0.72rem !important;
+    margin-bottom: 0.35rem !important;
+    gap: 0.25rem !important;
     display: flex !important;
     align-items: center !important;
+    flex-wrap: wrap !important;
   }
 
   .star-rating i:not(:first-child) {
-    display: none !important;
+    display: inline-block !important;
   }
 
   .rating-val {
-    font-size: 0.65rem !important;
+    font-size: 0.74rem !important;
     font-weight: 800 !important;
   }
 
   .rating-count {
-    display: none !important;
+    display: inline !important;
+    font-size: 0.68rem !important;
+    color: var(--text-muted) !important;
   }
 
-  /* Compact Price Row */
+  /* Price Row */
   .bundle-price-row, .etsy-price-row {
-    padding-top: 0.25rem !important;
+    padding-top: 0.35rem !important;
     margin-top: auto !important;
     border-top: 1px dashed var(--border-subtle) !important;
     display: flex !important;
     flex-wrap: wrap !important;
     align-items: baseline !important;
     justify-content: space-between !important;
-    gap: 0.15rem !important;
+    gap: 0.25rem !important;
   }
 
   .price-stack {
-    gap: 0.2rem !important;
+    gap: 0.3rem !important;
     display: inline-flex !important;
     align-items: baseline !important;
     white-space: nowrap !important;
@@ -4021,7 +4105,7 @@ input:checked + .switch-slider:before {
   }
 
   .price-current {
-    font-size: 0.84rem !important;
+    font-size: 0.96rem !important;
     font-weight: 900 !important;
     color: var(--accent-orange) !important;
     letter-spacing: -0.2px !important;
@@ -4030,44 +4114,44 @@ input:checked + .switch-slider:before {
   }
 
   .price-original {
-    font-size: 0.62rem !important;
+    font-size: 0.72rem !important;
     text-decoration: line-through !important;
     white-space: nowrap !important;
     word-break: keep-all !important;
   }
 
   .price-discount-badge, .price-discount {
-    font-size: 0.52rem !important;
-    padding: 0.05rem 0.2rem !important;
-    border-radius: 3px !important;
+    font-size: 0.62rem !important;
+    padding: 0.08rem 0.25rem !important;
+    border-radius: 4px !important;
     white-space: nowrap !important;
   }
 
-  /* 3-Grid Action Button: Clean single tap button */
+  /* Action Button: Accessible touch target (>= 40px) */
   .bundle-card-actions {
-    margin-top: 0.35rem !important;
+    margin-top: 0.45rem !important;
     display: flex !important;
     gap: 0 !important;
   }
 
   .btn-card-view {
     width: 100% !important;
-    min-height: 30px !important;
-    padding: 0.32rem 0.4rem !important;
-    font-size: 0.72rem !important;
+    min-height: 42px !important;
+    padding: 0.45rem 0.6rem !important;
+    font-size: 0.82rem !important;
     font-weight: 800 !important;
-    border-radius: 6px !important;
-    background: linear-gradient(135deg, rgba(255, 94, 54, 0.16), rgba(255, 138, 0, 0.1)) !important;
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, rgba(255, 94, 54, 0.18), rgba(255, 138, 0, 0.12)) !important;
     color: var(--accent-orange) !important;
-    border: 1px solid rgba(255, 94, 54, 0.35) !important;
+    border: 1px solid rgba(255, 94, 54, 0.4) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 0.25rem !important;
+    gap: 0.35rem !important;
     touch-action: manipulation;
   }
 
-  /* Secondary desktop buttons hidden on 3-grid mobile card */
+  /* Secondary desktop buttons hidden on mobile card */
   .btn-card-page, .btn-card-share, .btn-card-ig {
     display: none !important;
   }
@@ -4087,59 +4171,187 @@ input:checked + .switch-slider:before {
     height: 10px !important;
   }
 
-  /* Compact Phone Header */
+  /* =========================================================================
+     COMPACT 2-ROW PHONE HEADER (Zero Wrapping Glitches, Zero Horizontal Overflow)
+     ========================================================================= */
   .etsy-top-bar {
-    padding: 0.35rem 0;
+    padding: 0.3rem 0 !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
   }
 
   .etsy-nav-main {
-    padding: 0.5rem 0;
-    gap: 0.5rem;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0.45rem 0 0.5rem 0 !important;
+    gap: 0.35rem 0.5rem !important;
   }
 
+  /* Row 1 Left: Brand Logo */
   .etsy-brand-logo {
-    font-size: 1.45rem;
+    order: 1 !important;
+    font-size: 1.18rem !important;
+    gap: 0.35rem !important;
+    flex-shrink: 0 !important;
+    line-height: 1 !important;
+  }
+
+  .brand-logo-img {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+    border-radius: 6px !important;
   }
 
   .etsy-brand-logo small {
-    display: none;
+    display: none !important;
+  }
+
+  /* Row 1 Right: Categories Trigger Pill */
+  .btn-categories-trigger {
+    order: 2 !important;
+    margin-left: auto !important;
+    min-height: 36px !important;
+    padding: 0.3rem 0.55rem !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    border-radius: var(--radius-pill) !important;
+    background: var(--bg-subtle) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-primary) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    touch-action: manipulation !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn-categories-trigger:hover,
+  .btn-categories-trigger:active {
+    border-color: var(--accent-orange) !important;
+    color: var(--accent-orange) !important;
+    background: rgba(249, 87, 33, 0.08) !important;
+  }
+
+  .btn-categories-trigger i {
+    color: var(--accent-orange) !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* Row 1 Right: Action Buttons (Wishlist & Theme Toggle) */
+  .etsy-nav-right {
+    order: 3 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.3rem !important;
+    flex-shrink: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  /* Hide Instagram button on Row 1 on mobile to prevent overcrowding */
+  .etsy-nav-right .btn-contact-nav {
+    display: none !important;
+  }
+
+  .etsy-icon-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    font-size: 0.9rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .badge-counter {
+    top: -3px !important;
+    right: -3px !important;
+    font-size: 0.62rem !important;
+    min-width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Row 2: Search Bar Full Width */
+  .etsy-search-wrapper {
+    order: 4 !important;
+    width: 100% !important;
+    flex-basis: 100% !important;
+    max-width: 100% !important;
+    margin-top: 0.25rem !important;
   }
 
   .etsy-search-container {
-    padding: 0.2rem 0.35rem 0.2rem 1rem;
+    height: 42px !important;
+    padding: 0.15rem 0.25rem 0.15rem 0.95rem !important;
+    border-radius: var(--radius-pill) !important;
+    background: var(--bg-surface) !important;
+    border: 1.5px solid var(--border-subtle) !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .etsy-search-container:focus-within {
+    border-color: var(--accent-orange) !important;
+    box-shadow: 0 0 0 3px var(--accent-orange-light) !important;
   }
 
   .etsy-search-input {
-    font-size: 16px; /* Prevents auto-zoom on iOS Safari */
-    padding: 0.4rem 0;
+    font-size: 16px !important; /* Prevents auto-zoom on iOS */
+    padding: 0.35rem 0 !important;
+    flex: 1 !important;
+    width: 100% !important;
   }
 
-  /* Horizontal Category Pill Swipe Bar */
+  .etsy-search-btn {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    font-size: 0.85rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Horizontal Category Pill Swipe Bar (Zero Horizontal Blowout) */
   .etsy-filters-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.65rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
   }
 
   .etsy-pill-chips-group {
-    width: calc(100% + 2rem);
-    margin: 0 -1rem;
-    padding: 0 1rem 0.4rem 1rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    flex-wrap: nowrap;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0.35rem 0.15rem !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    flex-wrap: nowrap !important;
+    box-sizing: border-box !important;
   }
 
   .etsy-pill-chips-group::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
 
   .etsy-filter-pill {
-    padding: 0.5rem 1rem;
-    font-size: 0.84rem;
-    white-space: nowrap;
-    flex-shrink: 0;
+    padding: 0.45rem 0.85rem !important;
+    font-size: 0.82rem !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    min-height: 38px !important;
   }
 
   /* Storefront Bottom Sheet Modal */
@@ -4232,3 +4444,280 @@ input:checked + .switch-slider:before {
     display: none !important;
   }
 }
+
+/* ==========================================================================
+   20. CATEGORIES DRAWER (Mobile Bottom Sheet & Desktop Flyout)
+   ========================================================================== */
+.categories-drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 100vw;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  display: flex;
+  align-items: flex-end; /* Bottom sheet on mobile */
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.categories-drawer-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.categories-drawer-container {
+  width: 100%;
+  max-width: 580px;
+  max-height: 88dvh;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-bottom: none;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.45);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.categories-drawer-backdrop.active .categories-drawer-container {
+  transform: translateY(0);
+}
+
+.categories-drawer-handle {
+  width: 44px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-subtle);
+  margin: 0.65rem auto 0.25rem auto;
+  flex-shrink: 0;
+}
+
+.categories-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.categories-drawer-title {
+  font-family: var(--font-display);
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.categories-drawer-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0.15rem 0 0 0;
+}
+
+.categories-drawer-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.categories-drawer-close:hover {
+  background: var(--accent-orange-light);
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+.categories-drawer-body {
+  padding: 1rem 1.25rem 2rem 1.25rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+}
+
+.category-card-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 0.95rem;
+  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  width: 100%;
+  touch-action: manipulation;
+  box-sizing: border-box;
+}
+
+.category-card-item:hover,
+.category-card-item.active {
+  border-color: var(--accent-orange);
+  background: rgba(249, 87, 33, 0.08);
+  transform: translateX(3px);
+}
+
+.cat-icon-badge {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.cat-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.cat-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.cat-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cat-arrow {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.category-card-item:hover .cat-arrow,
+.category-card-item.active .cat-arrow {
+  color: var(--accent-orange);
+  transform: translateX(2px);
+}
+
+.cat-badge-hot {
+  font-size: 0.62rem;
+  font-weight: 800;
+  background: #EF4444;
+  color: #FFFFFF;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-pill);
+}
+
+.cat-badge-val {
+  font-size: 0.62rem;
+  font-weight: 800;
+  background: var(--accent-orange);
+  color: #FFFFFF;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-pill);
+}
+
+.categories-drawer-quicklinks {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.quicklinks-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.quicklinks-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.quicklink-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.quicklink-chip:hover {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+  background: var(--accent-orange-light);
+}
+
+@media (min-width: 769px) {
+  .categories-drawer-backdrop {
+    align-items: center;
+  }
+  .categories-drawer-container {
+    border-radius: 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    transform: scale(0.92);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  }
+  .categories-drawer-backdrop.active .categories-drawer-container {
+    transform: scale(1);
+  }
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+

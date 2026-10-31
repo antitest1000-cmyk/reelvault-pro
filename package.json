@@ -1,7 +1,7 @@
 {
-  "name": "reelvault-pro",
+  "name": "get-bundle",
   "version": "1.0.0",
-  "description": "ReelVault PRO - Curated Viral 4K Vertical Reels Bundles Marketplace for Creators & Agencies",
+  "description": "Get Bundle - Curated Viral 4K Vertical Reels & Digital Products Marketplace for Creators & Agencies",
   "private": true,
   "scripts": {
     "build": "node generate-static-bundles.js && node generate-sitemap.js",
@@ -20,6 +20,6 @@
     "youtube-shorts",
     "tiktok"
   ],
-  "author": "ReelVault PRO",
+  "author": "Get Bundle",
   "license": "UNLICENSED"
 }

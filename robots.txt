@@ -1,4 +1,4 @@
-# ReelVault PRO - robots.txt
+# Get Bundle - robots.txt
 # Optimized for Google, Bing, and Generative AI Search Engines (GEO & AEO)
 
 User-agent: *
@@ -44,4 +44,4 @@ User-agent: anthropic-ai
 Allow: /
 
 # XML Sitemap
-Sitemap: https://reelvault.store/sitemap.xml
+Sitemap: https://reels-bundlee.netlify.app/sitemap.xml

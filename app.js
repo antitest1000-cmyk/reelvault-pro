@@ -9,7 +9,7 @@ const CONFIG = {
   CLOUDINARY_CLOUD_NAME: "demo-cloud",
   CLOUDINARY_UPLOAD_PRESET: "o5JUKpC9_HBc5pTO0OO6U7sxpQo",
   CLOUDINARY_FOLDER: "reel_bundle_thumbnails",
-  STORE_NAME: "ReelVault PRO",
+  STORE_NAME: "Get Bundle",
   STORE_TAGLINE: "The Premier Digital Marketplace for Viral Reels Bundles",
   CURRENCY_SYMBOL: "₹",
   CONTACT: {
@@ -2174,7 +2174,7 @@ function applyFiltersAndSort(resetLimit = true) {
         list = list.filter(b => AppState.wishlist.has(b.id));
         break;
       default: {
-        const filterNorm = AppState.activeFilter.toLowerCase();
+        const filterNorm = (AppState.activeFilter || "all").toLowerCase();
         list = list.filter(b => {
           const cat = (b.category || "").toLowerCase();
           const title = (b.title || "").toLowerCase();
@@ -2411,7 +2411,7 @@ function openShareModal(bundleId) {
   const fullUrl = `${window.location.origin}/bundle/${slug}.html`;
   const price = formatPrice(bundle.price);
   const reelsCount = `${Number(bundle.reels_count || 500).toLocaleString()}+ Reels`;
-  const shareText = `🔥 Check out "${bundle.title}" (${reelsCount}) on ReelVault PRO for just ${price}! Instant Google Drive download:`;
+  const shareText = `🔥 Check out "${bundle.title}" (${reelsCount}) on Get Bundle for just ${price}! Instant Google Drive download:`;
   const fallbackThumb = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
 
   // Populate dynamic social preview card inside the share modal
@@ -2454,7 +2454,7 @@ function openShareModal(bundleId) {
       if (navigator.share) {
         try {
           await navigator.share({
-            title: `${bundle.title} - ReelVault PRO`,
+            title: `${bundle.title} - Get Bundle`,
             text: shareText,
             url: fullUrl
           });
@@ -2638,12 +2638,98 @@ function setupEventListeners() {
     searchBtn.addEventListener("click", () => onSearch(searchInput.value));
   }
 
-  // Categories Header Button Click
+  // Categories Header Button & Drawer System
   const catMenuBtn = document.getElementById("categoriesMenuBtn");
-  if (catMenuBtn) {
-    catMenuBtn.addEventListener("click", () => {
+  const catDrawer = document.getElementById("categoriesDrawerBackdrop");
+  const catDrawerClose = document.getElementById("categoriesDrawerCloseBtn");
+
+  function openCategoriesDrawer() {
+    if (!catDrawer) {
       const area = document.getElementById("resultsArea");
       if (area) area.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    catDrawer.classList.add("active");
+    catDrawer.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    // Highlight current active category in drawer
+    catDrawer.querySelectorAll(".category-card-item").forEach(item => {
+      if (item.dataset.category === AppState.activeFilter) {
+        item.classList.add("active");
+      } else {
+        item.classList.remove("active");
+      }
+    });
+  }
+
+  function closeCategoriesDrawer() {
+    if (!catDrawer) return;
+    catDrawer.classList.remove("active");
+    catDrawer.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  if (catMenuBtn) {
+    catMenuBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openCategoriesDrawer();
+    });
+  }
+
+  if (catDrawerClose) {
+    catDrawerClose.addEventListener("click", closeCategoriesDrawer);
+  }
+
+  if (catDrawer) {
+    catDrawer.addEventListener("click", (e) => {
+      if (e.target === catDrawer) closeCategoriesDrawer();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && catDrawer.classList.contains("active")) {
+        closeCategoriesDrawer();
+      }
+    });
+
+    // Handle clicks on category cards inside drawer
+    catDrawer.querySelectorAll(".category-card-item").forEach(card => {
+      card.addEventListener("click", () => {
+        const catKey = card.dataset.category;
+        closeCategoriesDrawer();
+
+        if (catKey) {
+          AppState.activeFilter = catKey;
+
+          // Sync catalog filter pill row
+          if (filterGroup) {
+            filterGroup.querySelectorAll(".etsy-filter-pill").forEach(p => {
+              if (p.dataset.filter === catKey) {
+                p.classList.add("active");
+                p.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+              } else {
+                p.classList.remove("active");
+              }
+            });
+          }
+
+          // Sync subnav links if present
+          document.querySelectorAll(".etsy-subnav-link").forEach(l => {
+            if (l.dataset.nav === catKey) l.classList.add("active");
+            else l.classList.remove("active");
+          });
+
+          applyFiltersAndSort();
+
+          // Smooth scroll to catalog results area
+          const area = document.getElementById("resultsArea");
+          if (area) {
+            const headerOffset = 110;
+            const targetPos = area.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: Math.max(0, targetPos), behavior: "smooth" });
+          }
+        }
+      });
     });
   }
 
@@ -2664,10 +2750,13 @@ function setupEventListeners() {
   // Secondary Nav Links
   document.querySelectorAll(".etsy-subnav-link").forEach(link => {
     link.addEventListener("click", (e) => {
+      const navFilter = link.dataset.nav;
+      if (!navFilter) return; // Allow normal page navigation if not a filter link
+      e.preventDefault();
+
       document.querySelectorAll(".etsy-subnav-link").forEach(l => l.classList.remove("active"));
       link.classList.add("active");
 
-      const navFilter = link.dataset.nav;
       AppState.activeFilter = navFilter;
 
       // Sync filter pill group
@@ -2963,7 +3052,36 @@ async function initApp() {
       if (banner) banner.style.display = "flex";
     }
 
+    // Check URL parameters for initial category filter (e.g. ?filter=AI+%26+Technology or ?category=trending)
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParam = urlParams.get("filter") || urlParams.get("category");
+    if (filterParam) {
+      AppState.activeFilter = filterParam;
+      const filterGroup = document.getElementById("filterPillsGroup");
+      if (filterGroup) {
+        filterGroup.querySelectorAll(".etsy-filter-pill").forEach(p => {
+          if (p.dataset.filter === filterParam) {
+            p.classList.add("active");
+            p.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+          } else {
+            p.classList.remove("active");
+          }
+        });
+      }
+    }
+
     applyFiltersAndSort();
+
+    if (filterParam) {
+      setTimeout(() => {
+        const area = document.getElementById("resultsArea");
+        if (area) {
+          const headerOffset = 110;
+          const targetPos = area.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+          window.scrollTo({ top: Math.max(0, targetPos), behavior: "smooth" });
+        }
+      }, 200);
+    }
   } catch (err) {
     console.error("Store initialization error:", err);
     showToast("Failed to load bundles.", "error");

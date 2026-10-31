@@ -1,8 +1,8 @@
-# ReelVault PRO (Reels Bundle Store)
+# Get Bundle (Reels & Digital Products Store)
 > Premier Curated Digital Marketplace for 9:16 Viral Reels Bundles, Templates, and Short-Form Creator Video Assets.
 
 ## Brand Entity Information
-- **Brand Name:** ReelVault PRO
+- **Brand Name:** Get Bundle
 - **Entity Type:** Digital Marketplace & Content Production Platform for Creators & Agencies
 - **Primary Product:** Curated high-retention 9:16 vertical MP4 reels bundles (1080x1920 HD/4K) across 20+ viral niches.
 - **Operating Currency:** INR (₹), with direct personal fulfillment via UPI, GPay, PhonePe, Paytm, and Cards.
@@ -21,7 +21,7 @@
 - [Customer Proof & Reviews](/reviews.html): Real creator chat screenshots, view count benchmarks, and verified buyer payment confirmations.
 - [How to Buy Guide](/how-to-buy.html): Step-by-step visual tutorial detailing the Instagram DM payment and password unlock flow.
 - [Frequently Asked Questions](/faq.html): Answer-first responses to common questions about licensing, instant Google Drive delivery, and copyright safety.
-- [About & Mission](/about.html): Background story of ReelVault PRO and why it was founded to empower Indian and global short-form video creators.
+- [About & Mission](/about.html): Background story of Get Bundle and why it was founded to empower Indian and global short-form video creators.
 - [Licensing & Usage Rights](/license.html): Specific commercial rules, rights to post/edit/monetize, and copyright guidelines.
 - [Refund & Replacement Policy](/policies.html): Replacement guarantee for any broken cloud storage links.
 - [Request a Bundle](/request-bundle.html): Form for creators and agencies to request custom reels bundles or niche packs.
