@@ -41,6 +41,17 @@
     ]
   }
   </script>
+  <!-- Anti-Flash Dark Theme Script (Default Dark) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("reelstore_theme");
+      if (savedTheme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
 </head>
 <body>
 

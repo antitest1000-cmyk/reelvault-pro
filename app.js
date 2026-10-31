@@ -1818,12 +1818,12 @@ const AppState = {
 // ----------------------------------------------------------------------------
 const ThemeModule = {
   init() {
-    const saved = localStorage.getItem("reelstore_theme") || "light";
+    const saved = localStorage.getItem("reelstore_theme") || "dark";
     this.apply(saved);
     const btn = document.getElementById("themeToggleBtn");
     if (btn) {
       btn.addEventListener("click", () => {
-        const cur = document.documentElement.getAttribute("data-theme") || "light";
+        const cur = document.documentElement.getAttribute("data-theme") || "dark";
         const next = cur === "dark" ? "light" : "dark";
         this.apply(next);
         localStorage.setItem("reelstore_theme", next);

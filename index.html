@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,16 +15,15 @@
   <meta name="twitter:title" content="Reels Bundle | Digital Download Marketplace - ReelVault PRO">
   <meta name="twitter:description" content="Discover viral 4K reels bundles, AI faceless avatars, luxury video assets, and trending hooks.">
 
-  <!-- Anti-Flash Theme Script (Executes before page render) -->
+  <!-- Anti-Flash Dark Theme Script (Default Dark) -->
+  <!-- Anti-Flash Dark Theme Script (Default Dark) -->
   <script>
     (function() {
       const savedTheme = localStorage.getItem("reelstore_theme");
-      if (savedTheme) {
-        document.documentElement.setAttribute("data-theme", savedTheme);
-      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        document.documentElement.setAttribute("data-theme", "dark");
-      } else {
+      if (savedTheme === "light") {
         document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
       }
     })();
   </script>
@@ -331,7 +330,7 @@
             <button type="button" class="btn-modal-heart" id="modalHeartBtn" aria-label="Save to Wishlist">
               <i class="fa-regular fa-heart"></i>
             </button>
-            <img src="" alt="Bundle Preview" id="modalImage" class="modal-main-image">
+            <img src="" alt="Bundle Preview" id="modalImage" class="modal-main-image" width="600" height="600">
           </div>
 
           <!-- Feature Bullets Under Image -->
@@ -466,7 +465,7 @@
             <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">
               <i class="fa-solid fa-shield-halved" style="color: #10B981; margin-right: 4px;"></i> Accepted Direct Payment Modes
             </div>
-            <img src="https://betterbundle.in/wp-content/themes/woodmart/images/payments.png" alt="Accepted Payment Modes: UPI, GPay, PhonePe, Paytm, Cards" style="max-height: 24px; width: auto; opacity: 0.88; display: inline-block;">
+            <img src="https://betterbundle.in/wp-content/themes/woodmart/images/payments.png" alt="Accepted Payment Modes: UPI, GPay, PhonePe, Paytm, Cards" width="280" height="24" style="max-height: 24px; width: auto; opacity: 0.88; display: inline-block;">
           </div>
 
         </div>
@@ -582,7 +581,7 @@
         </div>
         <div class="footer-payments-wrapper">
           <span class="footer-payments-text">Accepted Payments:</span>
-          <img src="https://betterbundle.in/wp-content/themes/woodmart/images/payments.png" alt="Accepted Payment Methods: UPI, GPay, PhonePe, Paytm, Cards" class="footer-payments-img">
+          <img src="https://betterbundle.in/wp-content/themes/woodmart/images/payments.png" alt="Accepted Payment Methods: UPI, GPay, PhonePe, Paytm, Cards" width="280" height="24" class="footer-payments-img">
         </div>
         <a href="#top" class="footer-back-to-top" id="backToTopBtn" title="Back to top">
           <span>Back to Top</span>
@@ -610,7 +609,7 @@
 
       <!-- Dynamic Live Social Preview Card -->
       <div class="share-preview-card">
-        <img src="" alt="" id="sharePreviewImg" class="share-preview-thumb">
+        <img src="" alt="" id="sharePreviewImg" class="share-preview-thumb" width="76" height="76">
         <div class="share-preview-info">
           <div class="share-preview-title" id="sharePreviewTitle">Bundle Title</div>
           <div class="share-preview-desc" id="sharePreviewDesc">4K vertical 9:16 reels for Instagram and YouTube Shorts.</div>

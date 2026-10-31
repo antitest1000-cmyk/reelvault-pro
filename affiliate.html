@@ -51,6 +51,17 @@
     ]
   }
   </script>
+  <!-- Anti-Flash Dark Theme Script (Default Dark) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("reelstore_theme");
+      if (savedTheme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -285,7 +296,7 @@
         </div>
         <div class="footer-payments-wrapper">
           <span class="footer-payments-text">Accepted Payments:</span>
-          <img src="https://betterbundle.in/wp-content/themes/woodmart/images/payments.png" alt="Accepted Payment Methods: UPI, GPay, PhonePe, Paytm, Cards" class="footer-payments-img">
+          <img src="https://betterbundle.in/wp-content/themes/woodmart/images/payments.png" alt="Accepted Payment Methods: UPI, GPay, PhonePe, Paytm, Cards" class="footer-payments-img" width="280" height="24" loading="lazy">
         </div>
       </div>
     </div>

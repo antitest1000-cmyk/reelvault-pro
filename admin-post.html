@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-theme="dark" lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +10,12 @@
   <meta name="googlebot" content="noindex, nofollow">
 
   <!-- Anti-Flash Theme Script (Light/Dark mode) -->
+  <!-- Anti-Flash Dark Theme Script (Default Dark) -->
   <script>
     (function() {
       const savedTheme = localStorage.getItem("reelstore_theme");
-      if (savedTheme) {
-        document.documentElement.setAttribute("data-theme", savedTheme);
-      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        document.documentElement.setAttribute("data-theme", "dark");
+      if (savedTheme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
       } else {
         document.documentElement.setAttribute("data-theme", "dark");
       }
@@ -1538,7 +1537,7 @@ Please generate the complete, ready-to-publish product description now:`;
         card.innerHTML = `
           <!-- Thumbnail & Checkbox -->
           <div style="text-align: center;">
-            <img src="${escapeHtml(item.image)}" alt="Thumb" style="width: 72px; height: 72px; object-fit: contain; background: var(--media-bg); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 0.35rem;" onerror="this.src='https://via.placeholder.com/72'">
+            <img src="${escapeHtml(item.image)}" alt="Thumb" width="72" height="72" style="width: 72px; height: 72px; object-fit: contain; background: var(--media-bg); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 0.35rem;" onerror="this.src='https://via.placeholder.com/72'">
             <label style="font-size: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 0.3rem; cursor: pointer; color: var(--text-secondary);">
               <input type="checkbox" ${item.included ? 'checked' : ''} onchange="toggleBulkItemIncluded(${idx}, this.checked)">
               <span>Include</span>

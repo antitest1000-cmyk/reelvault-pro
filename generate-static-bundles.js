@@ -232,9 +232,19 @@ bundles.forEach((bundle, index) => {
   <!-- Schema.org FAQPage JSON-LD (AEO & Featured Snippets) -->
   <script type="application/ld+json">
   ${JSON.stringify(faqSchema, null, 2)}
+  <!-- Anti-Flash Dark Theme Script (Default Dark) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("reelstore_theme");
+      if (savedTheme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
   </script>
 </head>
-<body>
+<body class="has-bundle-mobile-bar">
 
   <!-- Top Announcement Bar -->
   <aside class="etsy-top-bar" aria-label="Announcement">
@@ -662,7 +672,17 @@ bundles.forEach((bundle, index) => {
         <a href="../index.html" class="footer-back-to-top"><span>Return to Storefront</span> <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
-  </footer>
+  <!-- Mobile Sticky Bottom Buy Bar (Thumb-Optimized Conversion Booster) -->
+  <aside class="bundle-mobile-sticky-bar" aria-label="Quick Purchase">
+    <div class="bundle-mobile-bar-price">
+      <span class="current">₹${priceNum}</span>
+      <span class="original">₹${originalPriceNum}</span>
+    </div>
+    <a href="${igDmUrl}" target="_blank" rel="noopener noreferrer" class="bundle-mobile-bar-btn" onclick="navigator.clipboard.writeText('Hi @giveme_8! I want to buy bundle: ${escapeHtml(bundle.title)} (${escapeHtml(bundle.id)}) for ₹${priceNum}. Please send payment details!'); alert('Order details copied to clipboard! Paste it directly in Instagram DM to @giveme_8.');">
+      <i class="fa-brands fa-instagram" style="font-size: 1.15rem;"></i>
+      <span>Buy via DM • ₹${priceNum}</span>
+    </a>
+  </aside>
 
   <!-- Unlock & Link Sharing Handler Script -->
   <script>

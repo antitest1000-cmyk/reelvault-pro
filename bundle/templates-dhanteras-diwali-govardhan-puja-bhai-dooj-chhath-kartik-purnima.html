@@ -116,9 +116,19 @@
     }
   ]
 }
+  <!-- Anti-Flash Dark Theme Script (Default Dark) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("reelstore_theme");
+      if (savedTheme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
   </script>
 </head>
-<body>
+<body class="has-bundle-mobile-bar">
 
   <!-- Top Announcement Bar -->
   <aside class="etsy-top-bar" aria-label="Announcement">
@@ -585,7 +595,17 @@
         <a href="../index.html" class="footer-back-to-top"><span>Return to Storefront</span> <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
-  </footer>
+  <!-- Mobile Sticky Bottom Buy Bar (Thumb-Optimized Conversion Booster) -->
+  <aside class="bundle-mobile-sticky-bar" aria-label="Quick Purchase">
+    <div class="bundle-mobile-bar-price">
+      <span class="current">₹129</span>
+      <span class="original">₹399</span>
+    </div>
+    <a href="https://ig.me/m/giveme_8" target="_blank" rel="noopener noreferrer" class="bundle-mobile-bar-btn" onclick="navigator.clipboard.writeText('Hi @giveme_8! I want to buy bundle: Templates (Dhanteras, Diwali, Govardhan Puja, Bhai Dooj, Chhath, Kartik Purnima) (RB-8362) for ₹129. Please send payment details!'); alert('Order details copied to clipboard! Paste it directly in Instagram DM to @giveme_8.');">
+      <i class="fa-brands fa-instagram" style="font-size: 1.15rem;"></i>
+      <span>Buy via DM • ₹129</span>
+    </a>
+  </aside>
 
   <!-- Unlock & Link Sharing Handler Script -->
   <script>
