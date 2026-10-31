@@ -104,12 +104,12 @@ bundles.forEach((bundle, index) => {
   if (sameCategory.length > 0) {
     related.push(...sameCategory.slice(0, 2));
   }
-  const needed = 4 - related.length;
+  const needed = 6 - related.length;
   related.push(...otherCategory.slice(0, needed));
 
-  if (related.length < 4) {
+  if (related.length < 6) {
     const leftOvers = shuffledCandidates.filter(b => !related.some(r => r.id === b.id));
-    related.push(...leftOvers.slice(0, 4 - related.length));
+    related.push(...leftOvers.slice(0, 6 - related.length));
   }
 
   const productSchema = {
@@ -790,7 +790,7 @@ bundles.forEach((bundle, index) => {
         }
         const currentId = "${escapeHtml(bundle.id)}";
         const others = catalog.filter(b => b.id !== currentId);
-        const shuffled = [...others].sort(() => 0.5 - Math.random()).slice(0, 4);
+        const shuffled = [...others].sort(() => 0.5 - Math.random()).slice(0, 6);
 
         grid.innerHTML = shuffled.map(rel => \`
           <div class="bundle-card etsy-card" style="animation: fadeIn 0.3s ease;">

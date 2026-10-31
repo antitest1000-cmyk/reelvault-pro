@@ -971,16 +971,34 @@ img {
    -------------------------------------------------------------------------- */
 .etsy-products-grid, .product-grid, .etsy-product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3.5rem;
 }
 
-@media (max-width: 640px) {
+/* Tablet & Compact Screens */
+@media (max-width: 1024px) and (min-width: 769px) {
   .etsy-products-grid, .product-grid, .etsy-product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Mobile Phones (3 Grids Layout - Instagram Explore Style) */
+@media (max-width: 768px) {
+  .etsy-products-grid, .product-grid, .etsy-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
     margin-bottom: 2rem;
+  }
+}
+
+/* Extra Small Screens under 330px: 2 columns */
+@media (max-width: 330px) {
+  .etsy-products-grid, .product-grid, .etsy-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
   }
 }
 
@@ -3718,7 +3736,7 @@ input:checked + .switch-slider:before {
 
 /* Touch Target Minimum Sizing (Apple 44x44px & Material 48dp compliant) */
 @media (max-width: 768px) {
-  button, .btn-categories-trigger, .etsy-icon-btn, .btn-contact-nav, .etsy-filter-pill, .bundle-share-btn, .btn-card-view, .tool-action-btn {
+  button, .btn-categories-trigger, .etsy-icon-btn, .btn-contact-nav, .etsy-filter-pill, .bundle-share-btn, .tool-action-btn {
     min-height: 44px;
     touch-action: manipulation;
   }
@@ -3726,6 +3744,222 @@ input:checked + .switch-slider:before {
   .etsy-icon-btn {
     min-width: 44px;
     min-height: 44px;
+  }
+
+  /* Compact Container Padding on Mobile */
+  .container {
+    padding: 0 0.65rem !important;
+  }
+
+  /* Compact 3-Grid Bundle Cards (Instagram Explore Tile Style) */
+  .etsy-products-grid, .product-grid, .etsy-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .bundle-card, .etsy-card {
+    padding: 0.35rem 0.35rem 0.45rem 0.35rem !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--border-subtle) !important;
+    background: var(--bg-card) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    touch-action: manipulation;
+  }
+
+  .bundle-card:hover, .etsy-card:hover {
+    transform: none !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .bundle-card-media, .etsy-card-media {
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 7px !important;
+    margin-bottom: 0.35rem !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: var(--media-bg) !important;
+  }
+
+  /* Mini Corner Badges on 3-Grid */
+  .badge-card-corner {
+    top: 0.25rem !important;
+    left: 0.25rem !important;
+    font-size: 0.52rem !important;
+    font-weight: 800 !important;
+    padding: 0.12rem 0.3rem !important;
+    border-radius: 4px !important;
+    gap: 0.15rem !important;
+    letter-spacing: 0.2px !important;
+    line-height: 1.1 !important;
+  }
+
+  .badge-card-corner i {
+    font-size: 0.48rem !important;
+  }
+
+  /* Mini Wishlist Heart Button */
+  .btn-card-favorite {
+    top: 0.25rem !important;
+    right: 0.25rem !important;
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 0.68rem !important;
+    background: rgba(11, 15, 23, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  /* Hide floating share icon in 3-grid tile to keep image clean */
+  .btn-card-share-float {
+    display: none !important;
+  }
+
+  /* Compact Card Meta (Category & Reels Tag) */
+  .bundle-card-meta {
+    margin-bottom: 0.15rem !important;
+    gap: 0.2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .bundle-category-tag {
+    font-size: 0.58rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.2px !important;
+    max-width: 62px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .bundle-reels-tag {
+    font-size: 0.55rem !important;
+    padding: 0.08rem 0.22rem !important;
+    border-radius: 3px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Card Title: 2 lines clamp with legible font size */
+  .bundle-card-title, .etsy-card-title {
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    margin: 0.12rem 0 0.22rem 0 !important;
+    min-height: 1.85rem !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  /* Compact Rating: 1 Star + score */
+  .bundle-rating-row, .etsy-rating-row {
+    font-size: 0.65rem !important;
+    margin-bottom: 0.25rem !important;
+    gap: 0.15rem !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .star-rating i:not(:first-child) {
+    display: none !important;
+  }
+
+  .rating-val {
+    font-size: 0.65rem !important;
+    font-weight: 800 !important;
+  }
+
+  .rating-count {
+    display: none !important;
+  }
+
+  /* Compact Price Row */
+  .bundle-price-row, .etsy-price-row {
+    padding-top: 0.25rem !important;
+    margin-top: auto !important;
+    border-top: 1px dashed var(--border-subtle) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: baseline !important;
+    justify-content: space-between !important;
+    gap: 0.15rem !important;
+  }
+
+  .price-stack {
+    gap: 0.2rem !important;
+    display: inline-flex !important;
+    align-items: baseline !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+  }
+
+  .price-current {
+    font-size: 0.84rem !important;
+    font-weight: 900 !important;
+    color: var(--accent-orange) !important;
+    letter-spacing: -0.2px !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+  }
+
+  .price-original {
+    font-size: 0.62rem !important;
+    text-decoration: line-through !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+  }
+
+  .price-discount-badge, .price-discount {
+    font-size: 0.52rem !important;
+    padding: 0.05rem 0.2rem !important;
+    border-radius: 3px !important;
+    white-space: nowrap !important;
+  }
+
+  /* 3-Grid Action Button: Clean single tap button */
+  .bundle-card-actions {
+    margin-top: 0.35rem !important;
+    display: flex !important;
+    gap: 0 !important;
+  }
+
+  .btn-card-view {
+    width: 100% !important;
+    min-height: 30px !important;
+    padding: 0.32rem 0.4rem !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    border-radius: 6px !important;
+    background: linear-gradient(135deg, rgba(255, 94, 54, 0.16), rgba(255, 138, 0, 0.1)) !important;
+    color: var(--accent-orange) !important;
+    border: 1px solid rgba(255, 94, 54, 0.35) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.25rem !important;
+    touch-action: manipulation;
+  }
+
+  /* Secondary desktop buttons hidden on 3-grid mobile card */
+  .btn-card-page, .btn-card-share, .btn-card-ig {
+    display: none !important;
+  }
+
+  /* Skeletons on 3-Grid */
+  .skeleton-card {
+    padding: 0.35rem !important;
+    gap: 0.35rem !important;
+    border-radius: 10px !important;
+  }
+
+  .skeleton-media {
+    border-radius: 7px !important;
+  }
+
+  .skeleton-line {
+    height: 10px !important;
   }
 
   /* Compact Phone Header */
