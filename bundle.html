@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReelVault PRO | Bundle Detail</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="app.js"></script>
+</head>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-page); color: var(--text-primary); font-family: var(--font-sans); text-align: center;">
+  <div style="padding: 2rem;">
+    <i class="fa-solid fa-spinner fa-spin" style="font-size: 2.5rem; color: var(--accent-orange); margin-bottom: 1rem;"></i>
+    <h2 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.5rem;">Loading Bundle...</h2>
+    <p style="color: var(--text-muted); font-size: 0.95rem;">Redirecting to dedicated pre-rendered bundle page...</p>
+  </div>
+
+  <script>
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const bundleId = params.get('id');
+      const slugParam = params.get('slug');
+
+      function slugify(text) {
+        return String(text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '').substring(0, 75);
+      }
+
+      try {
+        let bundle = null;
+        if (typeof DEMO_BUNDLES !== 'undefined') {
+          if (bundleId) bundle = DEMO_BUNDLES.find(b => b.id.toLowerCase() === bundleId.toLowerCase());
+          if (!bundle && slugParam) bundle = DEMO_BUNDLES.find(b => slugify(b.title) === slugParam);
+        }
+
+        if (bundle) {
+          const slug = slugify(bundle.title);
+          window.location.replace(`bundle/${slug}.html`);
+          return;
+        }
+      } catch (e) {}
+
+      // Fallback: return to storefront
+      setTimeout(() => {
+        window.location.replace('index.html');
+      }, 1500);
+    })();
+  </script>
+</body>
+</html>

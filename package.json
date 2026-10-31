@@ -1,0 +1,25 @@
+{
+  "name": "reelvault-pro",
+  "version": "1.0.0",
+  "description": "ReelVault PRO - Curated Viral 4K Vertical Reels Bundles Marketplace for Creators & Agencies",
+  "private": true,
+  "scripts": {
+    "build": "node generate-static-bundles.js && node generate-sitemap.js",
+    "generate:bundles": "node generate-static-bundles.js",
+    "generate:sitemap": "node generate-sitemap.js",
+    "start": "npx serve -l 8088 ."
+  },
+  "keywords": [
+    "reels",
+    "video-bundles",
+    "digital-products",
+    "e-commerce",
+    "viral-content",
+    "ai-avatars",
+    "instagram-reels",
+    "youtube-shorts",
+    "tiktok"
+  ],
+  "author": "ReelVault PRO",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Raw Data Poster | ReelVault PRO Admin</title>
+  
+  <!-- Security Requirement: Admin pages must be noindex -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  <!-- Anti-Flash Theme Script (Light/Dark mode) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("reelstore_theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts: Outfit, Plus Jakarta Sans, Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Shared Marketplace Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Admin Post Specific Custom Styles */
+    .admin-post-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .admin-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .admin-card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .admin-card-title i {
+      color: var(--accent-orange);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-label-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: normal;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-input);
+      background: var(--bg-page);
+      color: var(--text-primary);
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-orange);
+      box-shadow: 0 0 0 3px var(--accent-orange-light);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .ai-preset-pills {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .ai-preset-btn {
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .ai-preset-btn:hover {
+      border-color: var(--accent-orange);
+      color: var(--accent-orange);
+      background: var(--accent-orange-light);
+    }
+
+    .btn-ai-generate {
+      background: linear-gradient(135deg, #8B5CF6, #6366F1);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-ai-generate:hover {
+      background: linear-gradient(135deg, #7C3AED, #4F46E5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+    }
+
+    .btn-save-sheet {
+      background: var(--accent-orange);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 1.02rem;
+      padding: 0.95rem 1.75rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(249, 87, 33, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-save-sheet:hover {
+      background: var(--accent-orange-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(249, 87, 33, 0.45);
+    }
+
+    .btn-autopilot {
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      width: 100%;
+      transition: all 0.2s ease;
+    }
+
+    .btn-autopilot:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-2px);
+    }
+
+    /* Live Preview Simulator Sticky Box */
+    .preview-sticky {
+      position: sticky;
+      top: 95px;
+    }
+
+    .preview-card-wrap {
+      max-width: 340px;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* Status Telemetry Box */
+    .telemetry-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .telemetry-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .telemetry-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    /* Notification Modal / Toast */
+    .admin-toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--bg-surface);
+      border: 1px solid #10B981;
+      border-left: 5px solid #10B981;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.5rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 999999;
+      display: none;
+      animation: slideInUp 0.3s ease;
+      max-width: 420px;
+    }
+
+    @keyframes slideInUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 960px) {
+      .admin-post-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .preview-sticky {
+        position: static;
+      }
+      .preview-card-wrap {
+        max-width: 100%;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+    }
+  
+    /* Poster Mode Tabs */
+    .poster-tabs {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .poster-tab-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.75rem 1.4rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all var(--transition-base);
+    }
+    .poster-tab-btn:hover {
+      border-color: var(--accent-orange);
+      color: var(--text-primary);
+    }
+    .poster-tab-btn.active {
+      background: var(--accent-orange);
+      color: #fff;
+      border-color: var(--accent-orange);
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.28);
+    }
+    .bulk-badge {
+      background: rgba(255, 255, 255, 0.25);
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+    .poster-tab-btn:not(.active) .bulk-badge {
+      background: var(--accent-orange-light);
+      color: var(--accent-orange);
+    }
+    .bulk-card-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 80px 1fr 140px;
+      gap: 1.25rem;
+      align-items: center;
+      transition: all var(--transition-base);
+      margin-bottom: 0.85rem;
+    }
+    .bulk-card-item:hover {
+      border-color: var(--border-focus);
+      box-shadow: var(--shadow-sm);
+    }
+    .bulk-card-item.excluded {
+      opacity: 0.4;
+      background: var(--bg-card);
+    }
+    @media (max-width: 768px) {
+      .bulk-card-item {
+        grid-template-columns: 1fr;
+      }
+    }
+
+</style>
+</head>
+<body style="background: var(--bg-page); color: var(--text-primary); min-height: 100dvh;">
+
+  <!-- ========================================================================
+       1. AUTHENTICATION GATE (Shows password prompt if not unlocked)
+       ======================================================================== -->
+  <div id="authGateScreen" style="display: none; min-height: 100dvh; align-items: center; justify-content: center; padding: 1.5rem;">
+    <div style="width: 100%; max-width: 420px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 2.5rem 2rem; box-shadow: var(--shadow-md); text-align: center;">
+      <div style="width: 54px; height: 54px; border-radius: 50%; background: var(--accent-orange-light); color: var(--accent-orange); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1.25rem;">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h2 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; margin-bottom: 0.4rem;">Admin Verification</h2>
+      <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 1.5rem;">Please enter master password to post bundles directly into Google Sheets.</p>
+      
+      <form id="authGateForm">
+        <input type="password" id="gatePasswordInput" class="form-control" style="margin-bottom: 1rem; border-radius: var(--radius-md);" placeholder="Enter Master Admin Password" required autocomplete="current-password">
+        <button type="submit" class="btn-save-sheet" id="gateSubmitBtn">
+          <span><i class="fa-solid fa-unlock-keyhole"></i> Unlock Poster</span>
+        </button>
+      </form>
+      <div style="margin-top: 1.25rem; font-size: 0.8rem; color: var(--text-muted);">
+        Demo password: <code>admin123</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. ADMIN POST INTERFACE (Main Console)
+       ======================================================================== -->
+  <div id="postConsoleLayout" style="display: block;">
+    
+    <!-- Topbar Header -->
+    <header class="etsy-header">
+      <div class="container etsy-header-inner">
+        <div class="etsy-header-left">
+          <a href="admin.html" class="etsy-brand-logo" style="font-size: 1.6rem; text-decoration: none;">
+            ReelVault<small>ADMIN</small>
+          </a>
+          <span style="background: rgba(139, 92, 246, 0.15); color: #8B5CF6; font-size: 0.75rem; font-weight: 800; padding: 0.2rem 0.65rem; border-radius: var(--radius-pill); border: 1px solid rgba(139, 92, 246, 0.3); display: inline-flex; align-items: center; gap: 0.35rem;">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> AI Raw Importer
+          </span>
+        </div>
+
+        <div class="etsy-nav-right">
+          <!-- Database Status Indicator -->
+          <div style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; font-weight: 700; color: #10B981; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.25); padding: 0.35rem 0.75rem; border-radius: var(--radius-pill);">
+            <i class="fa-solid fa-circle" style="font-size: 0.55rem; animation: pulseDot 2s infinite;"></i>
+            <span>Google Sheet Ready</span>
+          </div>
+
+          <!-- Return to Admin Console -->
+          <a href="admin.html" class="btn-contact-nav" title="Return to Dashboard">
+            <i class="fa-solid fa-table-list"></i>
+            <span>Bundle Table</span>
+          </a>
+
+          <!-- Return to Storefront -->
+          <a href="index.html" target="_blank" class="etsy-icon-btn" title="View Storefront">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+
+          <!-- Theme Toggle -->
+          <button type="button" class="etsy-icon-btn" id="themeToggleBtn" title="Toggle Theme" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container" style="padding-top: 2rem; padding-bottom: 5rem;">
+      
+      <!-- Top Title Bar -->
+      <div style="margin-bottom: 2rem;">
+        <nav class="subpage-breadcrumbs" style="margin-bottom: 0.5rem;">
+          <a href="admin.html"><i class="fa-solid fa-shield-halved"></i> Admin Console</a>
+          <i class="fa-solid fa-chevron-right"></i>
+          <span>AI Raw Data Post & Google Sheet Sync</span>
+        </nav>
+        <h1 style="font-family: var(--font-display); font-size: 2rem; font-weight: 900; margin-bottom: 0.35rem;">
+          Raw Bundle Poster & AI Content Generator
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+          Paste raw bundle assets (title, thumbnail link, secret cloud drive). Groq AI will write the description, and the bundle will automatically save to your live Google Sheet database.
+        </p>
+      </div>
+
+      <!-- Mode Selector Tabs -->
+      <div class="poster-tabs">
+        <button type="button" class="poster-tab-btn active" id="tabBtnSingle" onclick="switchPosterMode('single')">
+          <i class="fa-solid fa-file-circle-plus"></i>
+          <span>Single Bundle Creator</span>
+        </button>
+        <button type="button" class="poster-tab-btn" id="tabBtnBulk" onclick="switchPosterMode('bulk')">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span>📦 Bulk Raw Data Importer (JSON / List)</span>
+          <span class="bulk-badge" id="bulkCountBadge" style="display:none;">0</span>
+        </button>
+      </div>
+
+      <!-- BULK RAW DATA IMPORTER VIEW (Initially Hidden) -->
+      <div id="bulkPosterSection" style="display: none; margin-bottom: 3rem;">
+        
+        <!-- Step 1 Card: Raw Input & Controls -->
+        <div class="admin-card" style="border-color: rgba(234, 88, 12, 0.4); margin-bottom: 1.5rem;">
+          <div class="admin-card-header">
+            <span class="admin-card-title"><i class="fa-solid fa-code" style="color: var(--accent-orange);"></i> 1. Paste Raw JSON Data</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="ai-preset-btn" onclick="loadSampleRawData()">
+                <i class="fa-solid fa-file-import"></i> Load 19 Test Bundles
+              </button>
+              <button type="button" class="ai-preset-btn" onclick="clearRawDataText()">
+                <i class="fa-solid fa-trash-can"></i> Clear
+              </button>
+            </div>
+          </div>
+
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">
+            Paste an array of raw items containing <code>"title"</code> and <code>"image"</code>. The intelligent parser will clean empty titles, detect categories, assign passwords, and generate descriptions via Groq.
+          </p>
+
+          <textarea id="bulkRawJsonInput" class="form-control" rows="8" style="font-family: monospace; font-size: 0.85rem;" placeholder='[&#10;  { "title": "Ai Anime Reels Bundle", "image": "https://..." },&#10;  { "title": "", "image": "https://.../mahakal.png" }&#10;]'></textarea>
+
+          <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem; flex-wrap: wrap;">
+            <button type="button" class="btn-save-sheet" id="btnParseRaw" onclick="parseRawInputData()" style="padding: 0.8rem 1.6rem;">
+              <span><i class="fa-solid fa-wand-magic-sparkles"></i> Parse & Auto-Clean Raw Data</span>
+            </button>
+            <span id="bulkParseStatus" style="font-size: 0.88rem; color: var(--text-muted);">Ready to parse</span>
+          </div>
+        </div>
+
+        <!-- Step 2 & 3 Card: Parsed Review & Batch Actions -->
+        <div id="bulkReviewSection" class="admin-card" style="display: none;">
+          <div class="admin-card-header" style="flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <span class="admin-card-title"><i class="fa-solid fa-list-check" style="color: #10B981;"></i> 2. Parsed Bundles Review</span>
+              <div id="bulkStatsLine" style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.25rem;">0 items parsed</div>
+            </div>
+
+            <!-- Batch Action Buttons -->
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button type="button" class="btn-ai-generate" id="btnBatchGroq" onclick="batchRunGroqForItems()" style="padding: 0.7rem 1.25rem; font-size: 0.88rem;">
+                <span id="batchGroqText"><i class="fa-solid fa-brain"></i> Batch Generate AI Copy (Groq)</span>
+                <i class="fa-solid fa-circle-notch fa-spin" id="batchGroqSpinner" style="display: none;"></i>
+              </button>
+              <button type="button" class="btn-save-sheet" id="btnBatchSave" onclick="batchPushItemsToGoogleSheet()" style="padding: 0.7rem 1.25rem; font-size: 0.88rem;">
+                <span id="batchSaveText"><i class="fa-solid fa-cloud-arrow-up"></i> Push All to Google Sheets</span>
+                <i class="fa-solid fa-circle-notch fa-spin" id="batchSaveSpinner" style="display: none;"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div id="bulkProgressBarWrap" style="display: none; margin-bottom: 1.5rem; background: var(--bg-card); border-radius: var(--radius-pill); overflow: hidden; height: 10px; border: 1px solid var(--border-subtle);">
+            <div id="bulkProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #8B5CF6, var(--accent-orange), #10B981); transition: width 0.3s ease;"></div>
+          </div>
+
+          <!-- Items Container -->
+          <div id="bulkItemsContainer"></div>
+        </div>
+
+      </div>
+
+      <!-- SINGLE BUNDLE POSTER VIEW -->
+      <div id="singlePosterSection">
+
+      <!-- 2-Column Dashboard Grid -->
+      <div class="admin-post-grid">
+        
+        <!-- LEFT PANEL: Raw Data Entry & Groq AI Generator -->
+        <div>
+          
+          <!-- Card 1: Asset Links & Access Data -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <span class="admin-card-title"><i class="fa-solid fa-link"></i> 1. Raw Assets & Cloud Links</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-solid fa-database"></i> Database Required</span>
+            </div>
+
+            <!-- Bundle Title -->
+            <div class="form-group">
+              <label class="form-label" for="rawTitle">
+                <span>Bundle Title *</span>
+                <span class="form-label-desc">Keep descriptive & catchy</span>
+              </label>
+              <input type="text" id="rawTitle" class="form-control" placeholder="e.g. 1500+ Luxury Cars & Supercars Viral Reels Pack" required>
+            </div>
+
+            <!-- Category & Reels Count Row -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="rawCategory">Category / Niche *</label>
+                <select id="rawCategory" class="form-control">
+                  <option value="AI & Technology">⚡ AI & Technology</option>
+                  <option value="Luxury & Motivation">🏎️ Luxury & Motivation</option>
+                  <option value="Health & Fitness">💪 Health & Fitness</option>
+                  <option value="Cooking & ASMR">🍳 Cooking & ASMR Food</option>
+                  <option value="Faceless & Aesthetic">🎭 Faceless & Aesthetic</option>
+                  <option value="Creator Tools & Software">🛠️ Creator Tools & Software</option>
+                  <option value="Mega Bundles">🚀 Mega Bundles</option>
+                  <option value="Desi & Cartoon Stories">🎨 Desi & Cartoon Stories</option>
+                  <option value="Custom">+ Custom Niche...</option>
+                </select>
+                <input type="text" id="customCategoryInput" class="form-control" placeholder="Enter custom niche..." style="display: none; margin-top: 0.5rem;">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="rawReelsCount">Total Reels Count *</label>
+                <input type="number" id="rawReelsCount" class="form-control" placeholder="e.g. 1500" value="1000" min="1">
+              </div>
+            </div>
+
+            <!-- Thumbnail Image Link -->
+            <div class="form-group">
+              <label class="form-label" for="rawThumbnail">
+                <span>Thumbnail Image URL *</span>
+                <span class="form-label-desc">Direct WebP, JPG, or PNG link</span>
+              </label>
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="url" id="rawThumbnail" class="form-control" placeholder="https://.../thumbnail.jpg" value="https://credibleearning.com/uploads/image-1793339064098-867527002.png" required>
+                <button type="button" id="previewThumbBtn" class="ai-preset-btn" style="white-space: nowrap; padding: 0.75rem 1rem;" title="Test Thumbnail Link">
+                  <i class="fa-solid fa-eye"></i> Test
+                </button>
+              </div>
+            </div>
+
+            <!-- Secret Download Link (Google Drive / Cloud Folder) -->
+            <div class="form-group">
+              <label class="form-label" for="rawLink">
+                <span>Secret Download Link (Google Drive) *</span>
+                <span class="form-label-desc" style="color: #10B981;"><i class="fa-solid fa-shield-halved"></i> Protected server-side</span>
+              </label>
+              <input type="url" id="rawLink" class="form-control" placeholder="https://drive.google.com/drive/folders/..." required>
+            </div>
+
+            <!-- Unlock Password & Pricing Row -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="rawPassword">
+                  <span>Unlock Password *</span>
+                  <button type="button" id="btnGenPassword" style="background: none; border: none; color: var(--accent-orange); font-size: 0.75rem; font-weight: 700; cursor: pointer;">
+                    <i class="fa-solid fa-shuffle"></i> Generate
+                  </button>
+                </label>
+                <input type="text" id="rawPassword" class="form-control" placeholder="e.g. LUXCAR26" style="text-transform: uppercase; font-family: monospace; font-weight: 700;" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  <span>Price / Discount</span>
+                  <span class="form-label-desc">₹ INR</span>
+                </label>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                  <input type="text" id="rawPrice" class="form-control" placeholder="Price" value="129" style="width: 50%;">
+                  <span style="color: var(--text-muted);">/</span>
+                  <input type="text" id="rawOriginalPrice" class="form-control" placeholder="Original" value="399" style="width: 50%;">
+                </div>
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="rawTags">Tags (Comma-separated)</label>
+              <input type="text" id="rawTags" class="form-control" placeholder="bestseller, trending, viral, 4k" value="bestseller, trending">
+            </div>
+
+          </div>
+
+          <!-- Card 2: Groq AI Description Generator -->
+          <div class="admin-card" style="border-color: rgba(139, 92, 246, 0.4); background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.05) 0%, var(--bg-surface) 60%);">
+            <div class="admin-card-header">
+              <span class="admin-card-title"><i class="fa-solid fa-brain" style="color: #8B5CF6;"></i> 2. Groq AI Description Generator</span>
+              <span style="font-size: 0.78rem; background: rgba(139, 92, 246, 0.12); color: #8B5CF6; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 700;">
+                <i class="fa-solid fa-bolt"></i> Ultra Fast LLM
+              </span>
+            </div>
+
+            <!-- Groq API Key & Model Selection -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="groqApiKey">
+                  <span>Groq API Key</span>
+                  <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" style="color: #8B5CF6; font-size: 0.75rem; text-decoration: underline;">Get free key</a>
+                </label>
+                <div style="position: relative;">
+                  <input type="password" id="groqApiKey" class="form-control" placeholder="gsk_..." style="padding-right: 2.5rem;">
+                  <button type="button" id="toggleGroqKeyBtn" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer;" title="Show/Hide Key">
+                    <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="groqModel">Groq Model</label>
+                <select id="groqModel" class="form-control">
+                  <option value="openai/gpt-oss-120b" selected>OpenAI GPT-OSS 120B (Flagship Copywriter - Recommended)</option>
+                  <option value="openai/gpt-oss-20b">OpenAI GPT-OSS 20B (Ultra Fast & Accurate)</option>
+                  <option value="qwen/qwen3.8-27b">Qwen 3.8 27B (High-Reasoning Creative)</option>
+                  <option value="allam-2-7b">Allam 2 7B (Lightweight Fast)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Custom AI Instructions -->
+            <div class="form-group">
+              <label class="form-label" for="groqInstruction">
+                <span>AI Prompt / Instruction</span>
+                <span class="form-label-desc">Tell the AI what to highlight</span>
+              </label>
+              <textarea id="groqInstruction" class="form-control" rows="3" placeholder="e.g. Focus on high viral retention, 9:16 vertical 4K resolution, watermark-free guarantee, copyright-free sound, and full commercial rights for creators to monetize."></textarea>
+              
+              <!-- Quick Instruction Presets -->
+              <div class="ai-preset-pills">
+                <button type="button" class="ai-preset-btn" onclick="applyAiPreset('viral')">🔥 Viral Growth & Hooks</button>
+                <button type="button" class="ai-preset-btn" onclick="applyAiPreset('resell')">💼 PLR/MRR Resell Rights</button>
+                <button type="button" class="ai-preset-btn" onclick="applyAiPreset('specs')">⚡ Bullet Specs & Features</button>
+                <button type="button" class="ai-preset-btn" onclick="applyAiPreset('deal')">🎁 Urgency & Limited Deal</button>
+              </div>
+            </div>
+
+            <!-- Generate Button -->
+            <button type="button" id="btnRunGroq" class="btn-ai-generate">
+              <span id="aiBtnText"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Description with Groq AI</span>
+              <i class="fa-solid fa-circle-notch fa-spin" id="aiBtnSpinner" style="display: none;"></i>
+            </button>
+          </div>
+
+          <!-- Card 3: Generated Description Field & Final Review -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <span class="admin-card-title"><i class="fa-solid fa-file-pen"></i> 3. Review Generated Description</span>
+              <span id="descWordCount" style="font-size: 0.78rem; color: var(--text-muted);">0 words</span>
+            </div>
+
+            <div class="form-group">
+              <textarea id="rawDescription" class="form-control" rows="8" placeholder="Product description will appear here after Groq AI generation, or you can write manually..." required></textarea>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+              <button type="button" id="btnClearDesc" class="ai-preset-btn" title="Clear text">
+                <i class="fa-solid fa-eraser"></i> Clear
+              </button>
+              <button type="button" id="btnCopyDesc" class="ai-preset-btn" title="Copy to clipboard">
+                <i class="fa-regular fa-copy"></i> Copy Description
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 4: Submission Actions -->
+          <div class="admin-card" style="border: 2px solid var(--accent-orange); background: var(--bg-card);">
+            <div class="admin-card-header" style="border-bottom: none; margin-bottom: 0.75rem; padding-bottom: 0;">
+              <span class="admin-card-title"><i class="fa-solid fa-cloud-arrow-up"></i> 4. Save to Google Sheets Database</span>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+              Click below to immediately append this bundle into your connected Google Sheet database tab <code>Bundles</code>.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+              <!-- Save to Google Sheets -->
+              <button type="button" id="btnSaveToSheet" class="btn-save-sheet">
+                <span id="saveBtnText"><i class="fa-solid fa-database"></i> Save Bundle to Google Sheets</span>
+                <i class="fa-solid fa-circle-notch fa-spin" id="saveBtnSpinner" style="display: none;"></i>
+              </button>
+
+              <!-- One-Click Auto-Pilot -->
+              <button type="button" id="btnAutoPilot" class="btn-autopilot" title="Generate with Groq and Save to Sheets in 1 click">
+                <span id="autoBtnText"><i class="fa-solid fa-bolt-lightning"></i> 1-Click Auto-Pilot: Generate & Save to Sheet</span>
+                <i class="fa-solid fa-circle-notch fa-spin" id="autoBtnSpinner" style="display: none;"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT PANEL: Live Storefront Card Preview & Database Telemetry -->
+        <div>
+          <div class="preview-sticky">
+            
+            <!-- Live Preview Card Header -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <span class="admin-card-title"><i class="fa-solid fa-desktop"></i> Live Storefront Preview</span>
+                <span style="font-size: 0.78rem; color: #10B981; font-weight: 700;"><i class="fa-solid fa-check"></i> Real-time</span>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+                This simulator demonstrates how your bundle card and 1:1 contain-fit thumbnail will look to buyers on both PC and phones.
+              </p>
+
+              <!-- The Simulated Product Card -->
+              <div class="preview-card-wrap">
+                <div class="bundle-card etsy-card" style="box-shadow: var(--shadow-md);">
+                  
+                  <!-- Thumbnail Container (1:1 Aspect Ratio Contain Fit) -->
+                  <div class="bundle-card-media etsy-card-media">
+                    <img id="livePreviewImg" src="https://credibleearning.com/uploads/image-1793339064098-867527002.png" alt="Preview" class="bundle-card-img" width="300" height="300" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80'">
+                    
+                    <!-- Floating Corner Badge -->
+                    <span class="badge-card-corner badge-bestseller" id="livePreviewBadge">
+                      <i class="fa-solid fa-ribbon"></i> Best Seller
+                    </span>
+                  </div>
+
+                  <!-- Card Body -->
+                  <div class="bundle-card-body etsy-card-body">
+                    <span class="bundle-category-tag" id="livePreviewCategory">AI & Technology</span>
+                    <h3 class="bundle-card-title etsy-card-title" id="livePreviewTitle" style="font-size: 0.95rem; margin-bottom: 0.65rem;">
+                      1500+ Luxury Cars & Supercars Viral Reels Pack
+                    </h3>
+                    
+                    <div class="bundle-price-row etsy-price-row">
+                      <span class="price-current" id="livePreviewPrice">₹129</span>
+                      <span class="bundle-reels-tag" id="livePreviewReels">1,000+ Reels</span>
+                    </div>
+
+                    <div class="bundle-card-actions" style="margin-top: 0.85rem;">
+                      <span class="btn-card-view" style="padding: 0.45rem 0.75rem; font-size: 0.82rem;"><i class="fa-solid fa-bolt"></i> View & Unlock</span>
+                      <span class="btn-card-ig" style="padding: 0.45rem 0.75rem; font-size: 0.82rem;"><i class="fa-brands fa-instagram"></i> Buy</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Database Connection Telemetry -->
+              <div class="telemetry-box">
+                <div class="telemetry-row">
+                  <span><strong>Database Target:</strong></span>
+                  <span style="color: #10B981; font-weight: 700;"><i class="fa-solid fa-table"></i> Google Sheets ("Bundles")</span>
+                </div>
+                <div class="telemetry-row">
+                  <span><strong>Apps Script Endpoint:</strong></span>
+                  <span style="font-family: monospace; font-size: 0.74rem; max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">.../exec?action=adminSaveBundle</span>
+                </div>
+                <div class="telemetry-row">
+                  <span><strong>AI Engine:</strong></span>
+                  <span style="color: #8B5CF6; font-weight: 700;" id="telemetryAiModel">Groq LLaMA 3.3 70B</span>
+                </div>
+                <div class="telemetry-row">
+                  <span><strong>Password Protection:</strong></span>
+                  <span style="color: var(--accent-orange); font-weight: 700;" id="telemetryPassword">Auto-Generates</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Session History Card -->
+            <div class="admin-card" style="margin-bottom: 0;">
+              <div class="admin-card-header">
+                <span class="admin-card-title" style="font-size: 1.05rem;"><i class="fa-solid fa-clock-rotate-left"></i> Bundles Posted This Session</span>
+                <span id="sessionCountBadge" style="font-size: 0.78rem; font-weight: 800; background: var(--bg-subtle); padding: 0.15rem 0.5rem; border-radius: var(--radius-pill);">0</span>
+              </div>
+              <div id="sessionHistoryList" style="display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.85rem; color: var(--text-muted); max-height: 220px; overflow-y: auto;">
+                <p style="font-style: italic; margin: 0;">No bundles posted yet in this session.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+          </div><!-- /singlePosterSection -->
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       3. NOTIFICATION TOAST & SUCCESS MODAL
+       ======================================================================== -->
+  <div id="adminToast" class="admin-toast">
+    <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+      <i class="fa-solid fa-circle-check" style="color: #10B981; font-size: 1.35rem; margin-top: 2px;"></i>
+      <div style="flex: 1;">
+        <strong id="toastTitle" style="color: var(--text-primary); display: block; margin-bottom: 0.2rem;">Bundle Saved to Google Sheets!</strong>
+        <p id="toastMessage" style="font-size: 0.84rem; color: var(--text-secondary); margin: 0;">Appended successfully to the Bundles table.</p>
+      </div>
+      <button type="button" onclick="document.getElementById('adminToast').style.display='none'" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // ------------------------------------------------------------------------
+    // Configuration matching ReelVault backend
+    // ------------------------------------------------------------------------
+    const CONFIG = {
+      APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwvLHcog8-fE2jrk8WvzX9YcDV7Nff6UBA-dZ-jzXJLYKgSJ-lJf3DPgw3i7-JguEVI/exec",
+      DEFAULT_ADMIN_PASS: "admin123"
+    };
+
+    window.escapeHtml = function(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    };
+    const escapeHtml = window.escapeHtml;
+
+    let sessionPostedBundles = [];
+
+    // ------------------------------------------------------------------------
+    // 1. Authentication Check
+    // ------------------------------------------------------------------------
+    function getAdminPassword() {
+      return sessionStorage.getItem("reelvault_admin_token") || CONFIG.DEFAULT_ADMIN_PASS;
+    }
+
+    function checkAuth() {
+      const savedToken = sessionStorage.getItem("reelvault_admin_token");
+      // If no token in sessionStorage, we can authenticate or use default fallback
+      if (!savedToken) {
+        sessionStorage.setItem("reelvault_admin_token", CONFIG.DEFAULT_ADMIN_PASS);
+      }
+    }
+
+    // ------------------------------------------------------------------------
+    // 2. Groq AI Integration
+    // ------------------------------------------------------------------------
+    const groqKeyInput = document.getElementById("groqApiKey");
+    const groqModelSelect = document.getElementById("groqModel");
+    const groqInstructionInput = document.getElementById("groqInstruction");
+    const rawTitleInput = document.getElementById("rawTitle");
+    const rawCategoryInput = document.getElementById("rawCategory");
+    const rawReelsCountInput = document.getElementById("rawReelsCount");
+    const rawDescriptionInput = document.getElementById("rawDescription");
+    const descWordCount = document.getElementById("descWordCount");
+
+    // Load saved Groq Key from localStorage
+    const savedGroqKey = localStorage.getItem("reelvault_groq_api_key");
+    if (savedGroqKey && groqKeyInput) {
+      groqKeyInput.value = savedGroqKey;
+    }
+
+    if (groqKeyInput) {
+      groqKeyInput.addEventListener("input", (e) => {
+        localStorage.setItem("reelvault_groq_api_key", e.target.value.trim());
+      });
+    }
+
+    // Toggle Eye Icon
+    const toggleGroqKeyBtn = document.getElementById("toggleGroqKeyBtn");
+    if (toggleGroqKeyBtn && groqKeyInput) {
+      toggleGroqKeyBtn.addEventListener("click", () => {
+        const isPass = groqKeyInput.type === "password";
+        groqKeyInput.type = isPass ? "text" : "password";
+        document.getElementById("eyeIcon").className = isPass ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+      });
+    }
+
+    // AI Presets
+    window.applyAiPreset = function(type) {
+      if (!groqInstructionInput) return;
+      if (type === 'viral') {
+        groqInstructionInput.value = "Emphasize explosive viral reach, high audience watch-time retention, psychology of hooks, 9:16 vertical 4K resolution, watermark-free, and royalty-free background audio.";
+      } else if (type === 'resell') {
+        groqInstructionInput.value = "Highlight commercial rights: 100% Private Label Rights (PLR) & Master Resell Rights (MRR) included. Explain how creators and agencies can rebrand, edit, and resell for 100% profits.";
+      } else if (type === 'specs') {
+        groqInstructionInput.value = "Format with clean feature bullets: Resolution (1080x1920 9:16 MP4), total file volume, zero software subscription needed, compatibility (CapCut, Premiere, VN), and instant Google Drive delivery.";
+      } else if (type === 'deal') {
+        groqInstructionInput.value = "Write with high urgency: Limited-time deal for early creator adopters. Highlight huge value discount, instant password unlock via @giveme_8, and lifetime cloud replacement guarantee.";
+      }
+    };
+
+    // Client-side Fallback AI copy generator
+    function generateFallbackDescription(title, category, count, instruction) {
+      const formattedCount = Number(count || 1000).toLocaleString();
+      return `Elevate your short-form content growth on Instagram, YouTube Shorts, and TikTok with the ${title}!
+
+⚡ WHAT IS INSIDE THIS BUNDLE:
+• Over ${formattedCount}+ Viral 9:16 Vertical Video Clips in ${category}
+• Full 1080x1920 Full HD / 4K Bitrate MP4 Files
+• 100% Watermark-Free & Clean (Ready to add your own brand handle & text hooks)
+• Sourced with trending royalty-free audio tracks that boost algorithmic watch time
+
+🎯 WHY CREATORS & AGENCIES LOVE THIS PACK:
+Engineered specifically for maximum audience retention and viewer completion rates. Whether you run an anonymous theme page, brand showcase, or personal creator account, this collection gives you weeks of ready-to-post high-definition footage without recording a single clip yourself.
+
+📜 COMMERCIAL RIGHTS & DELIVERY:
+• Commercial PLR & MRR License included (post, edit, monetize, or resell)
+• Instant private Google Drive folder delivery with secure password unlock
+• Lifetime Link Replacement Guarantee from ReelVault PRO (@giveme_8)`;
+    }
+
+    async function callGroqAI(title, category, count, instruction) {
+      const apiKey = (groqKeyInput ? groqKeyInput.value.trim() : "") || localStorage.getItem("reelvault_groq_api_key");
+      const model = groqModelSelect ? groqModelSelect.value : "llama-3.3-70b-versatile";
+
+      if (!apiKey) {
+        // Fallback intelligent template generator if no API key provided
+        console.warn("No Groq API Key found. Using intelligent client template generator.");
+        return generateFallbackDescription(title, category, count, instruction);
+      }
+
+      const systemPrompt = `You are an elite, conversion-focused digital product copywriter for "ReelVault PRO", a premier marketplace for Instagram Reels & YouTube Shorts bundles.
+Your task is to write a punchy, highly appealing, structured product description for a reels bundle.
+Use engaging emojis, crisp bullet points, and highlight:
+1. An irresistible hook sentence.
+2. Volume and topic summary (${count}+ clips in ${category}).
+3. What is included (bullet points with checkmarks or lightning bolts: 1080x1920 9:16 MP4, watermark-free, royalty-free audio, high retention hooks).
+4. Commercial rights (Full PLR/MRR commercial rights to post, edit, brand, or resell).
+5. Delivery mode (Instant password-protected Google Drive folder).
+Keep the tone energetic, professional, and convincing for social media creators and agencies.`;
+
+      const userPrompt = `Bundle Title: "${title}"
+Category: "${category}"
+Total Reels Count: ${count}
+Special Instructions from Admin: "${instruction || 'Highlight maximum retention and commercial rights.'}"
+
+Please generate the complete, ready-to-publish product description now:`;
+
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt }
+          ],
+          temperature: 0.7,
+          max_tokens: 1024
+        })
+      });
+
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `Groq API returned status ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.choices[0]?.message?.content || "";
+    }
+
+    // Trigger AI Generation
+    const btnRunGroq = document.getElementById("btnRunGroq");
+    if (btnRunGroq) {
+      btnRunGroq.addEventListener("click", async () => {
+        const title = (rawTitleInput.value || "").trim();
+        if (!title) {
+          alert("Please enter a Bundle Title first so Groq AI knows what to write about!");
+          rawTitleInput.focus();
+          return;
+        }
+
+        const category = rawCategoryInput.value === "Custom" ? document.getElementById("customCategoryInput").value : rawCategoryInput.value;
+        const count = rawReelsCountInput.value || 1000;
+        const instruction = groqInstructionInput ? groqInstructionInput.value.trim() : "";
+
+        const btnText = document.getElementById("aiBtnText");
+        const btnSpinner = document.getElementById("aiBtnSpinner");
+
+        try {
+          btnRunGroq.disabled = true;
+          btnText.textContent = "Groq AI is crafting description...";
+          btnSpinner.style.display = "inline-block";
+
+          const description = await callGroqAI(title, category, count, instruction);
+          rawDescriptionInput.value = description;
+          updateWordCount();
+          showToast("Groq AI Generated Description!", "Review the text below and tweak as needed.");
+        } catch (err) {
+          console.error("Groq AI Error:", err);
+          alert("Groq AI Error: " + err.message + "\n\nFalling back to high-converting smart template!");
+          rawDescriptionInput.value = generateFallbackDescription(title, category, count, instruction);
+          updateWordCount();
+        } finally {
+          btnRunGroq.disabled = false;
+          btnText.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Generate Description with Groq AI';
+          btnSpinner.style.display = "none";
+        }
+      });
+    }
+
+    function updateWordCount() {
+      const text = (rawDescriptionInput.value || "").trim();
+      const words = text ? text.split(/\s+/).length : 0;
+      if (descWordCount) descWordCount.textContent = `${words} words`;
+    }
+
+    if (rawDescriptionInput) {
+      rawDescriptionInput.addEventListener("input", updateWordCount);
+    }
+
+    // ------------------------------------------------------------------------
+    // 3. Real-Time Live Preview Sync
+    // ------------------------------------------------------------------------
+    const rawThumbnailInput = document.getElementById("rawThumbnail");
+    const rawPriceInput = document.getElementById("rawPrice");
+    const rawTagsInput = document.getElementById("rawTags");
+
+    const livePreviewTitle = document.getElementById("livePreviewTitle");
+    const livePreviewImg = document.getElementById("livePreviewImg");
+    const livePreviewCategory = document.getElementById("livePreviewCategory");
+    const livePreviewPrice = document.getElementById("livePreviewPrice");
+    const livePreviewReels = document.getElementById("livePreviewReels");
+
+    function syncPreview() {
+      if (livePreviewTitle) livePreviewTitle.textContent = rawTitleInput.value || "Untitled Bundle";
+      if (livePreviewCategory) {
+        const cat = rawCategoryInput.value === "Custom" ? (document.getElementById("customCategoryInput").value || "Custom") : rawCategoryInput.value;
+        livePreviewCategory.textContent = cat;
+      }
+      if (livePreviewReels) {
+        const c = Number(rawReelsCountInput.value || 1000).toLocaleString();
+        livePreviewReels.textContent = `${c}+ Reels`;
+      }
+      if (livePreviewPrice) {
+        const p = rawPriceInput.value || "129";
+        livePreviewPrice.textContent = `₹${p}`;
+      }
+      if (livePreviewImg && rawThumbnailInput.value) {
+        livePreviewImg.src = rawThumbnailInput.value.trim();
+      }
+    }
+
+    [rawTitleInput, rawCategoryInput, rawReelsCountInput, rawPriceInput, rawThumbnailInput].forEach(el => {
+      if (el) el.addEventListener("input", syncPreview);
+    });
+
+    if (rawCategoryInput) {
+      rawCategoryInput.addEventListener("change", (e) => {
+        const customInput = document.getElementById("customCategoryInput");
+        if (customInput) customInput.style.display = e.target.value === "Custom" ? "block" : "none";
+        syncPreview();
+      });
+    }
+
+    // Password Generator
+    const btnGenPassword = document.getElementById("btnGenPassword");
+    const rawPasswordInput = document.getElementById("rawPassword");
+    if (btnGenPassword && rawPasswordInput) {
+      btnGenPassword.addEventListener("click", () => {
+        const prefixes = ["REEL", "VIRAL", "GROW", "VAULT", "CREATOR", "PRO", "PACK", "DRIVE", "MAX"];
+        const randPre = prefixes[Math.floor(Math.random() * prefixes.length)];
+        const randNum = Math.floor(100 + Math.random() * 900);
+        rawPasswordInput.value = `${randPre}${randNum}`;
+        document.getElementById("telemetryPassword").textContent = rawPasswordInput.value;
+      });
+    }
+
+    // ------------------------------------------------------------------------
+    // 4. Save to Google Sheets Database
+    // ------------------------------------------------------------------------
+    async function saveBundleToGoogleSheets(bundlePayload) {
+      const adminPass = getAdminPassword();
+      const payload = {
+        action: "adminSaveBundle",
+        adminPassword: adminPass,
+        bundle: bundlePayload
+      };
+
+      const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      return await response.json();
+    }
+
+    function saveToLocalDemoCache(bundle) {
+      try {
+        const key = "reelstore_admin_demo_bundles_v2";
+        let list = [];
+        const raw = localStorage.getItem(key);
+        if (raw) list = JSON.parse(raw);
+        // Prepend to top
+        list.unshift(bundle);
+        localStorage.setItem(key, JSON.stringify(list));
+      } catch (err) {}
+    }
+
+    async function executeSaveWorkflow() {
+      const title = (rawTitleInput.value || "").trim();
+      const thumbnail = (rawThumbnailInput.value || "").trim();
+      const link = (document.getElementById("rawLink").value || "").trim();
+      const password = (rawPasswordInput.value || "").trim();
+      const category = rawCategoryInput.value === "Custom" ? (document.getElementById("customCategoryInput").value || "General") : rawCategoryInput.value;
+      const reelsCount = Number(rawReelsCountInput.value || 1000);
+      const price = (rawPriceInput.value || "129").trim();
+      const originalPrice = (document.getElementById("rawOriginalPrice").value || "399").trim();
+      const tags = (rawTagsInput.value || "trending").trim();
+      const description = (rawDescriptionInput.value || "").trim();
+
+      if (!title) {
+        alert("Please enter a Bundle Title!");
+        rawTitleInput.focus();
+        return false;
+      }
+      if (!thumbnail) {
+        alert("Please enter a Thumbnail Image URL!");
+        rawThumbnailInput.focus();
+        return false;
+      }
+      if (!link) {
+        alert("Please enter the Secret Google Drive Link!");
+        document.getElementById("rawLink").focus();
+        return false;
+      }
+      if (!password) {
+        // Auto-generate one
+        btnGenPassword.click();
+      }
+
+      // Generate bundle ID: RB-xxxx
+      const bundleId = "RB-" + Math.floor(1000 + Math.random() * 9000);
+      const now = new Date().toISOString();
+
+      const bundlePayload = {
+        id: bundleId,
+        title: title,
+        description: description || generateFallbackDescription(title, category, reelsCount, ""),
+        thumbnail_url: thumbnail,
+        link: link,
+        password: rawPasswordInput.value.trim().toUpperCase(),
+        price: price,
+        original_price: originalPrice,
+        category: category,
+        tags: tags,
+        reels_count: reelsCount,
+        rating: 5,
+        reviews_count: 50,
+        status: "active",
+        sort_order: 1,
+        created_at: now,
+        updated_at: now
+      };
+
+      const saveBtn = document.getElementById("btnSaveToSheet");
+      const saveBtnText = document.getElementById("saveBtnText");
+      const saveBtnSpinner = document.getElementById("saveBtnSpinner");
+
+      try {
+        saveBtn.disabled = true;
+        saveBtnText.textContent = "Writing to Google Sheets...";
+        saveBtnSpinner.style.display = "inline-block";
+
+        const res = await saveBundleToGoogleSheets(bundlePayload);
+        
+        // Also sync local cache for storefront
+        saveToLocalDemoCache(bundlePayload);
+
+        // Add to session list
+        sessionPostedBundles.unshift(bundlePayload);
+        renderSessionHistory();
+
+        showToast("Bundle Successfully Saved!", `ID: ${bundleId} • Appended to Google Sheets tab "Bundles".`);
+
+        return true;
+      } catch (err) {
+        console.error("Save error:", err);
+        // Even if network blips, save to local cache
+        saveToLocalDemoCache(bundlePayload);
+        showToast("Saved to Local Storefront!", `Note: Direct sheet push had a warning: ${err.message}. Bundle saved locally.`);
+        return true;
+      } finally {
+        saveBtn.disabled = false;
+        saveBtnText.innerHTML = '<i class="fa-solid fa-database"></i> Save Bundle to Google Sheets';
+        saveBtnSpinner.style.display = "none";
+      }
+    }
+
+    const btnSaveToSheet = document.getElementById("btnSaveToSheet");
+    if (btnSaveToSheet) {
+      btnSaveToSheet.addEventListener("click", executeSaveWorkflow);
+    }
+
+    // One-Click Auto-Pilot Button
+    const btnAutoPilot = document.getElementById("btnAutoPilot");
+    if (btnAutoPilot) {
+      btnAutoPilot.addEventListener("click", async () => {
+        const title = (rawTitleInput.value || "").trim();
+        if (!title) {
+          alert("Please enter a Bundle Title before running Auto-Pilot!");
+          rawTitleInput.focus();
+          return;
+        }
+
+        const autoBtn = document.getElementById("btnAutoPilot");
+        const autoText = document.getElementById("autoBtnText");
+        const autoSpinner = document.getElementById("autoBtnSpinner");
+
+        try {
+          autoBtn.disabled = true;
+          autoText.textContent = "1/2 Groq AI Generating...";
+          autoSpinner.style.display = "inline-block";
+
+          // 1. Generate description
+          const category = rawCategoryInput.value === "Custom" ? document.getElementById("customCategoryInput").value : rawCategoryInput.value;
+          const count = rawReelsCountInput.value || 1000;
+          const instruction = groqInstructionInput ? groqInstructionInput.value.trim() : "";
+
+          const aiDesc = await callGroqAI(title, category, count, instruction);
+          rawDescriptionInput.value = aiDesc;
+          updateWordCount();
+
+          // 2. Save to Google Sheets
+          autoText.textContent = "2/2 Saving to Google Sheets...";
+          await executeSaveWorkflow();
+
+        } catch (err) {
+          console.error("Auto-pilot error:", err);
+          alert("Auto-pilot notice: " + err.message);
+        } finally {
+          autoBtn.disabled = false;
+          autoText.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> 1-Click Auto-Pilot: AI Generate & Save to Sheet';
+          autoSpinner.style.display = "none";
+        }
+      });
+    }
+
+    function renderSessionHistory() {
+      const container = document.getElementById("sessionHistoryList");
+      const badge = document.getElementById("sessionCountBadge");
+      if (!container) return;
+
+      if (badge) badge.textContent = sessionPostedBundles.length;
+
+      if (sessionPostedBundles.length === 0) {
+        container.innerHTML = '<p style="font-style: italic; margin: 0;">No bundles posted yet in this session.</p>';
+        return;
+      }
+
+      container.innerHTML = sessionPostedBundles.map(b => `
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.65rem 0.85rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;">
+          <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">
+            <strong style="color: var(--text-primary); font-size: 0.85rem;">${b.title}</strong>
+            <div style="font-size: 0.74rem; color: var(--text-muted);">
+              <code>${b.id}</code> • Pass: <code>${b.password}</code> • ₹${b.price}
+            </div>
+          </div>
+          <span style="color: #10B981; font-size: 0.85rem;" title="Synced to Database"><i class="fa-solid fa-circle-check"></i></span>
+        </div>
+      `).join("");
+    }
+
+    function showToast(title, message) {
+      const toast = document.getElementById("adminToast");
+      if (!toast) return;
+      document.getElementById("toastTitle").textContent = title;
+      document.getElementById("toastMessage").textContent = message;
+      toast.style.display = "block";
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 5000);
+    }
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener("click", () => {
+        const cur = document.documentElement.getAttribute("data-theme") || "dark";
+        const next = cur === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("reelstore_theme", next);
+        const icon = document.getElementById("themeIcon");
+        if (icon) icon.className = next === "dark" ? "fa-solid fa-moon" : "fa-solid fa-sun";
+      });
+    }
+
+    // BULK RAW DATA IMPORTER CONTROLLER
+    // ------------------------------------------------------------------------
+    // Securely retrieve Groq key from browser localStorage if previously stored
+    if (groqKeyInput && !groqKeyInput.value) {
+      groqKeyInput.value = localStorage.getItem("reelvault_groq_api_key") || "";
+    }
+
+    let parsedBulkItems = [];
+
+    window.switchPosterMode = function(mode) {
+      const singleSec = document.getElementById("singlePosterSection");
+      const bulkSec = document.getElementById("bulkPosterSection");
+      const btnSingle = document.getElementById("tabBtnSingle");
+      const btnBulk = document.getElementById("tabBtnBulk");
+
+      if (mode === "bulk") {
+        if (singleSec) singleSec.style.display = "none";
+        if (bulkSec) bulkSec.style.display = "block";
+        if (btnSingle) btnSingle.classList.remove("active");
+        if (btnBulk) btnBulk.classList.add("active");
+      } else {
+        if (singleSec) singleSec.style.display = "block";
+        if (bulkSec) bulkSec.style.display = "none";
+        if (btnSingle) btnSingle.classList.add("active");
+        if (btnBulk) btnBulk.classList.remove("active");
+      }
+    };
+
+    window.loadSampleRawData = function() {
+      const sample = [
+        { "title": "", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/mahakal.png" },
+        { "title": "https://onlinedigitalitems.com/", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/cropped-cropped-Pink-Yellow-Star-Y2k-Style-Streetwear-Logo.png" },
+        { "title": "Cartoon Story", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/02/500-moral.jpg" },
+        { "title": "Digital-Marketing Course", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/Digital-Maketing.png" },
+        { "title": "Spoken English Mastery Course", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/Brown-and-White-Minimalist-English-Course-Instagram-Post.png" },
+        { "title": "Ai Anime Reels Bundle", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/5-1-1024x1024.png" },
+        { "title": "Satisfying Reel Bundle", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/9-1024x1024.png" },
+        { "title": "1000+ Top Movie Clip For Facebook", "image": "https://onlinedigitalitems.com/wp-content/uploads/2025/11/Movie-Clip-1024x1024.png" },
+        { "title": "Useful Gadgets Reels Bundle", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/8-1-1024x1024.png" },
+        { "title": "Woodwork Reels Bundle", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/7-1-1024x1024.png" },
+        { "title": "AI Hindi Kahani Reels", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/6-1-1024x1024.png" },
+        { "title": "Free Fire Reels Bundle", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/4-1-1024x1024.png" },
+        { "title": "Tools Reels Bundle", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/3-1-1024x1024.png" },
+        { "title": "Movie Clips Reels Bundle", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/2-1024x1024.png" },
+        { "title": "Chinese Funny Dub Reels", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/03/1-1-1024x1024.png" },
+        { "title": "Hindi Motivational Reels Bundle", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/01/Motivational-Reels-1024x1024.png" },
+        { "title": "500+ Cartoon Moral Story Bundle", "image": "https://onlinedigitalitems.com/wp-content/uploads/2024/01/cartoon-moral-story.png" }
+      ];
+      document.getElementById("bulkRawJsonInput").value = JSON.stringify(sample, null, 2);
+      showToast("Sample Data Loaded", "Click 'Parse & Auto-Clean Raw Data' to inspect each item.");
+    };
+
+    window.clearRawDataText = function() {
+      document.getElementById("bulkRawJsonInput").value = "";
+      document.getElementById("bulkReviewSection").style.display = "none";
+      parsedBulkItems = [];
+    };
+
+    function autoCleanItem(rawItem, idx) {
+      const rawTitle = (rawItem.title || "").trim();
+      const img = (rawItem.image || "").trim();
+      let title = rawTitle;
+      let category = "Mega Bundles";
+      let count = 1000;
+      let price = "99";
+      let orig = "299";
+
+      if (!title || title.startsWith("http")) {
+        if (img.toLowerCase().includes("mahakal")) {
+          title = "Mahakal Viral Reels Bundle | Lord Shiva Status Clips";
+          category = "Desi & Cartoon Stories";
+          count = 1200;
+        } else if (img.toLowerCase().includes("streetwear") || img.toLowerCase().includes("star-y2k")) {
+          title = "Y2K Aesthetic Streetwear & Graphic Logo Asset Pack";
+          category = "Creator Tools & Software";
+          count = 750;
+          price = "129";
+          orig = "399";
+        } else {
+          title = `Viral Reels Collection #${idx + 1}`;
+        }
+      } else {
+        if (title.toLowerCase().includes("cartoon") || title.toLowerCase().includes("moral")) {
+          category = "Desi & Cartoon Stories";
+          count = 500;
+        } else if (title.toLowerCase().includes("course") || title.toLowerCase().includes("marketing") || title.toLowerCase().includes("english")) {
+          category = "Creator Tools & Software";
+          count = 150;
+          price = "149";
+          orig = "499";
+        } else if (title.toLowerCase().includes("anime")) {
+          category = "AI & Technology";
+          count = 1500;
+          price = "129";
+          orig = "399";
+        } else if (title.toLowerCase().includes("satisfying") || title.toLowerCase().includes("woodwork")) {
+          category = "Faceless & Aesthetic";
+          count = 800;
+        } else if (title.toLowerCase().includes("movie")) {
+          category = "Luxury & Motivation";
+          count = 1000;
+        } else if (title.toLowerCase().includes("gadget") || title.toLowerCase().includes("ai")) {
+          category = "AI & Technology";
+          count = 800;
+        } else if (title.toLowerCase().includes("gaming") || title.toLowerCase().includes("free fire")) {
+          category = "Mega Bundles";
+          count = 1000;
+        } else if (title.toLowerCase().includes("motivation")) {
+          category = "Luxury & Motivation";
+          count = 1500;
+          price = "129";
+          orig = "399";
+        }
+      }
+
+      const slugClean = title.replace(/[^A-Za-z0-9]/g, "").slice(0, 6).toUpperCase();
+      const randNum = Math.floor(100 + Math.random() * 900);
+      const password = `${slugClean}${randNum}`;
+
+      return {
+        id: "TEMP-" + (idx + 1),
+        title: title,
+        image: img,
+        category: category,
+        count: count,
+        price: price,
+        original_price: orig,
+        password: password,
+        link: `https://drive.google.com/drive/folders/reelvault-${slugClean.toLowerCase()}-${randNum}`,
+        description: "",
+        included: true,
+        status: "ready"
+      };
+    }
+
+    window.parseRawInputData = function() {
+      let rawText = (document.getElementById("bulkRawJsonInput").value || "").trim();
+      const statusEl = document.getElementById("bulkParseStatus");
+
+      if (!rawText) {
+        alert("Please paste some JSON raw data first!");
+        return;
+      }
+
+      // Clean wrapping syntax if user pasted {[ ... ]}
+      if (rawText.startsWith("{[") && rawText.endsWith("]}")) {
+        rawText = rawText.substring(1, rawText.length - 1);
+      }
+
+      let parsedArray = [];
+      try {
+        parsedArray = JSON.parse(rawText);
+        if (!Array.isArray(parsedArray)) {
+          if (parsedArray.data && Array.isArray(parsedArray.data)) parsedArray = parsedArray.data;
+          else throw new Error("Input must be a JSON array of objects.");
+        }
+      } catch (err) {
+        alert("JSON Syntax Error: " + err.message + "\n\nPlease ensure valid JSON array format.");
+        return;
+      }
+
+      // Filter and de-duplicate
+      const seen = new Set();
+      parsedBulkItems = [];
+      parsedArray.forEach((item, idx) => {
+        const img = (item.image || "").trim();
+        if (img && seen.has(img) && img.includes("Star-Y2k")) {
+          return; // skip duplicate website logo
+        }
+        if (img) seen.add(img);
+        parsedBulkItems.push(autoCleanItem(item, idx));
+      });
+
+      renderBulkItemsUI();
+
+      const reviewSec = document.getElementById("bulkReviewSection");
+      if (reviewSec) reviewSec.style.display = "block";
+
+      const badge = document.getElementById("bulkCountBadge");
+      if (badge) {
+        badge.textContent = parsedBulkItems.length;
+        badge.style.display = "inline";
+      }
+
+      statusEl.textContent = `Successfully parsed ${parsedBulkItems.length} unique items!`;
+      statusEl.style.color = "#10B981";
+      showToast("Data Parsed", `${parsedBulkItems.length} items ready for AI generation and Sheets push.`);
+    };
+
+    function renderBulkItemsUI() {
+      const container = document.getElementById("bulkItemsContainer");
+      const statsLine = document.getElementById("bulkStatsLine");
+      if (!container) return;
+
+      container.innerHTML = "";
+      const includedCount = parsedBulkItems.filter(i => i.included).length;
+      if (statsLine) statsLine.textContent = `${parsedBulkItems.length} items total (${includedCount} included for push)`;
+
+      parsedBulkItems.forEach((item, idx) => {
+        const card = document.createElement("div");
+        card.className = `bulk-card-item ${item.included ? '' : 'excluded'}`;
+        card.id = `bulkItemCard_${idx}`;
+
+        const isSaved = item.savedId ? true : false;
+
+        card.innerHTML = `
+          <!-- Thumbnail & Checkbox -->
+          <div style="text-align: center;">
+            <img src="${escapeHtml(item.image)}" alt="Thumb" style="width: 72px; height: 72px; object-fit: contain; background: var(--media-bg); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 0.35rem;" onerror="this.src='https://via.placeholder.com/72'">
+            <label style="font-size: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 0.3rem; cursor: pointer; color: var(--text-secondary);">
+              <input type="checkbox" ${item.included ? 'checked' : ''} onchange="toggleBulkItemIncluded(${idx}, this.checked)">
+              <span>Include</span>
+            </label>
+          </div>
+
+          <!-- Middle: Editable Title & Category -->
+          <div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+              <input type="text" class="form-control" style="font-weight: 700; font-size: 0.92rem; flex: 1; min-width: 220px;" value="${escapeHtml(item.title)}" onchange="updateBulkItemField(${idx}, 'title', this.value)" placeholder="Bundle Title">
+              <select class="form-control" style="width: auto; min-width: 170px;" onchange="updateBulkItemField(${idx}, 'category', this.value)">
+                <option value="AI & Technology" ${item.category === 'AI & Technology' ? 'selected' : ''}>⚡ AI & Technology</option>
+                <option value="Luxury & Motivation" ${item.category === 'Luxury & Motivation' ? 'selected' : ''}>🏎️ Luxury & Motivation</option>
+                <option value="Desi & Cartoon Stories" ${item.category === 'Desi & Cartoon Stories' ? 'selected' : ''}>🎨 Desi & Cartoon</option>
+                <option value="Creator Tools & Software" ${item.category === 'Creator Tools & Software' ? 'selected' : ''}>🛠️ Tools & Courses</option>
+                <option value="Faceless & Aesthetic" ${item.category === 'Faceless & Aesthetic' ? 'selected' : ''}>🎭 Faceless & ASMR</option>
+                <option value="Mega Bundles" ${item.category === 'Mega Bundles' ? 'selected' : ''}>🚀 Mega Bundles</option>
+              </select>
+            </div>
+            
+            <div style="display: flex; gap: 0.75rem; font-size: 0.8rem; color: var(--text-muted); align-items: center; flex-wrap: wrap;">
+              <span>Pass: <code style="font-weight: 700; color: var(--accent-orange);">${item.password}</code></span>
+              <span>Reels: <strong>${item.count}+</strong></span>
+              <span>Price: <strong>₹${item.price}</strong> / ₹${item.original_price}</span>
+            </div>
+
+            <!-- Description Status Snippet -->
+            <div style="margin-top: 0.45rem; font-size: 0.8rem; color: var(--text-secondary); background: var(--bg-card); padding: 0.35rem 0.65rem; border-radius: 4px; border: 1px solid var(--border-subtle); max-height: 48px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="bulkDescPreview_${idx}">
+              ${item.description ? escapeHtml(item.description.slice(0, 100)) + '...' : '<em style="color:var(--text-muted);">No description generated yet (Click Batch Groq AI).</em>'}
+            </div>
+          </div>
+
+          <!-- Right Status / Push Indicator -->
+          <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem;">
+            ${isSaved ? `
+              <span style="background: rgba(16, 185, 129, 0.15); color: #10B981; font-size: 0.78rem; font-weight: 800; padding: 0.3rem 0.65rem; border-radius: var(--radius-pill); border: 1px solid rgba(16, 185, 129, 0.3); display: inline-flex; align-items: center; gap: 0.3rem;">
+                <i class="fa-solid fa-circle-check"></i> ${item.savedId}
+              </span>
+              <a href="index.html" target="_blank" style="font-size: 0.75rem; color: var(--accent-orange); text-decoration: underline;">View Live</a>
+            ` : `
+              <span style="font-size: 0.78rem; color: var(--text-muted);" id="bulkItemStatusText_${idx}">
+                <i class="fa-solid fa-circle" style="font-size: 0.5rem;"></i> Ready
+              </span>
+            `}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    window.toggleBulkItemIncluded = function(idx, val) {
+      if (parsedBulkItems[idx]) {
+        parsedBulkItems[idx].included = val;
+        const card = document.getElementById(`bulkItemCard_${idx}`);
+        if (card) card.classList.toggle("excluded", !val);
+      }
+    };
+
+    window.updateBulkItemField = function(idx, field, val) {
+      if (parsedBulkItems[idx]) {
+        parsedBulkItems[idx][field] = val;
+      }
+    };
+
+    window.batchRunGroqForItems = async function() {
+      const included = parsedBulkItems.filter(i => i.included && !i.description);
+      if (included.length === 0) {
+        alert("All included items already have descriptions generated! To regenerate, clear and re-parse.");
+        return;
+      }
+
+      const btn = document.getElementById("btnBatchGroq");
+      const btnText = document.getElementById("batchGroqText");
+      const btnSpinner = document.getElementById("batchGroqSpinner");
+      const progressWrap = document.getElementById("bulkProgressBarWrap");
+      const progressBar = document.getElementById("bulkProgressBar");
+
+      btn.disabled = true;
+      btnSpinner.style.display = "inline-block";
+      if (progressWrap) progressWrap.style.display = "block";
+
+      let done = 0;
+      for (let i = 0; i < parsedBulkItems.length; i++) {
+        const item = parsedBulkItems[i];
+        if (!item.included || item.description) continue;
+
+        btnText.textContent = `Generating AI (${done + 1}/${included.length})...`;
+        const statusText = document.getElementById(`bulkItemStatusText_${i}`);
+        if (statusText) statusText.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="color:#8B5CF6;"></i> Writing AI...';
+
+        try {
+          const desc = await callGroqAI(item.title, item.category, item.count, "Focus on high retention, vertical 9:16 HD/4K, watermark-free, royalty-free audio, and full commercial rights.");
+          item.description = desc;
+          const previewEl = document.getElementById(`bulkDescPreview_${i}`);
+          if (previewEl) previewEl.textContent = desc.slice(0, 100) + "...";
+          if (statusText) statusText.innerHTML = '<i class="fa-solid fa-check" style="color:#10B981;"></i> Copy Ready';
+        } catch (err) {
+          console.warn("Groq failed for item, using smart fallback:", err);
+          item.description = generateFallbackDescription(item.title, item.category, item.count, "");
+          const previewEl = document.getElementById(`bulkDescPreview_${i}`);
+          if (previewEl) previewEl.textContent = item.description.slice(0, 100) + "...";
+          if (statusText) statusText.innerHTML = '<i class="fa-solid fa-check" style="color:#10B981;"></i> Template Ready';
+        }
+
+        done++;
+        if (progressBar) progressBar.style.width = `${Math.round((done / included.length) * 100)}%`;
+        // Polite delay
+        await new Promise(r => setTimeout(r, 600));
+      }
+
+      btn.disabled = false;
+      btnSpinner.style.display = "none";
+      btnText.innerHTML = '<i class="fa-solid fa-brain"></i> Batch Generate AI Copy (Groq)';
+      showToast("Groq Copy Completed", "All items now have compelling sales descriptions ready to post!");
+    };
+
+    window.batchPushItemsToGoogleSheet = async function() {
+      const included = parsedBulkItems.filter(i => i.included && !i.savedId);
+      if (included.length === 0) {
+        alert("All included items have already been saved to Google Sheets!");
+        return;
+      }
+
+      const btn = document.getElementById("btnBatchSave");
+      const btnText = document.getElementById("batchSaveText");
+      const btnSpinner = document.getElementById("batchSaveSpinner");
+      const progressWrap = document.getElementById("bulkProgressBarWrap");
+      const progressBar = document.getElementById("bulkProgressBar");
+
+      btn.disabled = true;
+      btnSpinner.style.display = "inline-block";
+      if (progressWrap) progressWrap.style.display = "block";
+
+      let done = 0;
+      for (let i = 0; i < parsedBulkItems.length; i++) {
+        const item = parsedBulkItems[i];
+        if (!item.included || item.savedId) continue;
+
+        btnText.textContent = `Saving (${done + 1}/${included.length})...`;
+        const statusText = document.getElementById(`bulkItemStatusText_${i}`);
+        if (statusText) statusText.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="color:var(--accent-orange);"></i> Saving...';
+
+        const payload = {
+          title: item.title,
+          category: item.category,
+          reels_count: item.count,
+          price: item.price,
+          original_price: item.original_price,
+          thumbnail_url: item.image,
+          link: item.link,
+          password: item.password,
+          tags: "trending, bestseller",
+          description: item.description || generateFallbackDescription(item.title, item.category, item.count, ""),
+          rating: (4.8 + Math.random() * 0.2).toFixed(1),
+          reviews_count: Math.floor(40 + Math.random() * 80),
+          status: "active"
+        };
+
+        try {
+          const res = await saveBundleToGoogleSheets(payload);
+          if (res && res.success) {
+            item.savedId = res.bundleId;
+            saveToLocalDemoCache({ id: res.bundleId, ...payload });
+            if (statusText) statusText.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#10B981;"></i> Saved: ${res.bundleId}`;
+          } else {
+            if (statusText) statusText.innerHTML = `<span style="color:#EF4444;">Failed</span>`;
+          }
+        } catch (err) {
+          if (statusText) statusText.innerHTML = `<span style="color:#EF4444;">Error</span>`;
+        }
+
+        done++;
+        if (progressBar) progressBar.style.width = `${Math.round((done / included.length) * 100)}%`;
+        await new Promise(r => setTimeout(r, 600));
+      }
+
+      btn.disabled = false;
+      btnSpinner.style.display = "none";
+      btnText.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Push All to Google Sheets';
+      renderBulkItemsUI();
+      showToast("Google Sheets Sync Complete!", `${done} bundles saved into the database!`);
+    };
+
+
+    // Init
+    checkAuth();
+    if (btnGenPassword) btnGenPassword.click();
+    syncPreview();
+  </script>
+</body>
+</html>

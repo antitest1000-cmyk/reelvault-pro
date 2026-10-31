@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | ReelVault Management</title>
+  
+  <!-- Security Requirement: Admin page must be noindex -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  <!-- Anti-Flash Theme Script (Light/Dark mode) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("reelstore_theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      } else {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Shared Marketplace Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: var(--bg-page); color: var(--text-primary);">
+
+  <!-- ========================================================================
+       1. ADMIN AUTHENTICATION SCREEN (Shown when not logged in)
+       ======================================================================== -->
+  <div id="adminLoginScreen" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem;">
+    <div style="width: 100%; max-width: 400px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 2.5rem 2rem; box-shadow: var(--shadow-md); text-align: center;">
+      
+      <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent-orange-light); color: var(--accent-orange); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 1rem;">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+
+      <h2 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; margin-bottom: 0.35rem;">ReelVault Admin</h2>
+      <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Enter master password to access bundle management and secret links.</p>
+
+      <form id="adminLoginForm">
+        <input type="password" id="adminPasswordInput" class="etsy-pass-input" style="width: 100%; margin-bottom: 1rem; border-radius: var(--radius-md);" placeholder="Admin Password" required autocomplete="current-password">
+        
+        <button type="submit" class="btn-etsy-big-add" id="adminLoginBtn" style="border-radius: var(--radius-md);">
+          <span id="loginBtnText"><i class="fa-solid fa-lock-open"></i> Unlock Console</span>
+          <i class="fa-solid fa-circle-notch fa-spin" id="loginSpinner" style="display: none;"></i>
+        </button>
+      </form>
+
+      <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+        <i class="fa-solid fa-circle-info"></i> Demo password: <code>admin123</code>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. ADMIN DASHBOARD (Shown after successful login)
+       ======================================================================== -->
+  <div id="adminDashboardLayout" style="display: none; min-height: 100vh;">
+    
+    <!-- Topbar -->
+    <header class="etsy-header">
+      <div class="container" style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.25rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <a href="admin.html" class="etsy-brand-logo" style="font-size: 1.6rem;">
+            ReelVault<small>ADMIN</small>
+          </a>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <!-- Theme Toggle -->
+          <button type="button" class="etsy-icon-btn" id="adminThemeToggleBtn" title="Toggle Theme" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon" id="adminThemeIcon"></i>
+          </button>
+
+          <!-- AI Raw Data Poster Link -->
+          <a href="admin-post.html" class="btn-contact-nav" style="background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.4); color: #8B5CF6;" title="AI Raw Data Importer & Groq Poster">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>AI Quick Post</span>
+          </a>
+
+          <!-- Storefront link -->
+          <a href="index.html" target="_blank" class="btn-contact-nav" title="Open Storefront in new tab">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>View Store</span>
+          </a>
+
+          <!-- Logout Button -->
+          <button type="button" id="adminLogoutBtn" class="btn-etsy-filter-pill" style="padding: 0.45rem 0.85rem; border-radius: var(--radius-pill); border: 1px solid #F43F5E; color: #F43F5E;">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
+      
+      <!-- Demo Notice -->
+      <div id="adminDemoNotice" style="display:none; background: var(--accent-orange-light); border: 1px solid var(--accent-orange); border-radius: 8px; padding: 0.75rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.88rem; color: var(--text-primary); align-items: center; justify-content: space-between;">
+        <span><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-orange);"></i> <strong>Demo Mode Active:</strong> Running on local test bundles. Set <code>APPS_SCRIPT_URL</code> in <code>admin.js</code> to sync with your live Google Sheet database!</span>
+      </div>
+
+      <!-- Dashboard Stat Cards -->
+      <div class="admin-stats-grid">
+        <div class="admin-stat-card">
+          <div style="font-size: 1.8rem; color: var(--accent-orange);"><i class="fa-solid fa-boxes-stacked"></i></div>
+          <div>
+            <div style="font-size: 1.6rem; font-weight: 800;" id="statTotalBundles">0</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted);">Total Bundles</div>
+          </div>
+        </div>
+
+        <div class="admin-stat-card">
+          <div style="font-size: 1.8rem; color: #10B981;"><i class="fa-solid fa-circle-check"></i></div>
+          <div>
+            <div style="font-size: 1.6rem; font-weight: 800;" id="statActiveBundles">0</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted);">Active in Store</div>
+          </div>
+        </div>
+
+        <div class="admin-stat-card">
+          <div style="font-size: 1.8rem; color: var(--text-muted);"><i class="fa-solid fa-eye-slash"></i></div>
+          <div>
+            <div style="font-size: 1.6rem; font-weight: 800;" id="statHiddenBundles">0</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted);">Hidden Bundles</div>
+          </div>
+        </div>
+
+        <div class="admin-stat-card">
+          <div style="font-size: 1.8rem; color: #F43F5E;"><i class="fa-solid fa-fire"></i></div>
+          <div>
+            <div style="font-size: 1.6rem; font-weight: 800;" id="statTrendingBundles">0</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted);">Trending Bundles</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toolbar: Search, Status Filter & Add Bundle Button -->
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap;">
+        
+        <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1; max-width: 420px;">
+          <input type="text" id="adminSearchInput" class="etsy-pass-input" placeholder="Search bundles by title, ID, niche..." style="border-radius: var(--radius-pill); font-weight: normal; font-size: 0.88rem;">
+          
+          <select id="adminStatusFilter" class="etsy-pass-input" style="width: auto; border-radius: var(--radius-pill); font-weight: normal; font-size: 0.88rem;">
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="hidden">Hidden</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <button type="button" id="adminRefreshBtn" class="btn-contact-nav" title="Refresh Bundles">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+
+          <a href="admin-post.html" class="btn-etsy-big-add" style="padding: 0.55rem 1.25rem; font-size: 0.88rem; width: auto; background: linear-gradient(135deg, #8B5CF6, #6366F1); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;" title="AI Raw Data Importer & Groq Poster">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Raw Data Post</span>
+          </a>
+
+          <button type="button" id="adminAddBundleBtn" class="btn-etsy-big-add" style="padding: 0.55rem 1.25rem; font-size: 0.88rem; width: auto; background: var(--accent-orange);">
+            <i class="fa-solid fa-plus"></i> Add New Bundle
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Reorder Notification Banner -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.82rem; color: var(--text-muted);">
+        <span><i class="fa-solid fa-arrows-up-down"></i> Drag table rows or use Up/Down arrows to reorder bundles in your store.</span>
+        <button type="button" id="saveReorderBtn" class="btn-etsy-filter-pill" style="display: none; background: #10B981; color: #fff; border-color: #10B981; padding: 0.35rem 0.85rem; font-size: 0.8rem;">
+          <i class="fa-solid fa-floppy-disk"></i> Save New Order
+        </button>
+      </div>
+
+      <!-- Bundles Management Table -->
+      <div class="admin-table-container">
+        <table class="admin-table" id="adminBundlesTable">
+          <thead>
+            <tr>
+              <th style="width: 45px; text-align: center;">#</th>
+              <th>Bundle Product</th>
+              <th style="width: 170px;">Price & Reels</th>
+              <th style="width: 130px; text-align: center;">Storefront Status</th>
+              <th style="width: 130px; text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody">
+            <!-- Dynamic rows inserted by admin.js -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       3. ADD / EDIT BUNDLE MODAL (Streamlined & Clean)
+       ======================================================================== -->
+  <div class="etsy-modal-backdrop" id="bundleEditModalBackdrop" aria-hidden="true">
+    <div class="etsy-modal-window" style="max-width: 900px; padding: 2rem;">
+      
+      <button type="button" class="etsy-modal-close" id="bundleEditModalClose" aria-label="Close form">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div style="margin-bottom: 1.5rem;">
+        <h2 id="modalFormTitle" style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem;">Add New Reel Bundle</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Fill in the essential details below. The preview updates live as you type.</p>
+      </div>
+
+      <form id="bundleEditForm">
+        <input type="hidden" id="editBundleId" value="">
+        <input type="hidden" id="editBundleSortOrder" value="">
+        <input type="hidden" id="editBundleCreatedAt" value="">
+
+        <div class="admin-modal-layout" style="display: grid; grid-template-columns: 280px 1fr; gap: 1.75rem; align-items: start;">
+          
+          <!-- LEFT: LIVE CARD PREVIEW -->
+          <div class="admin-live-preview-box" style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1rem; position: sticky; top: 1rem;">
+            <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--accent-orange); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.35rem;">
+              <i class="fa-solid fa-eye"></i> Live Storefront Preview
+            </div>
+
+            <!-- Mini Preview Card -->
+            <div class="bundle-card" style="box-shadow: none; border-color: var(--border-subtle); pointer-events: none; margin-bottom: 0;">
+              <div class="bundle-card-media" style="margin-bottom: 0.65rem;">
+                <span class="badge-card-corner badge-trending" id="previewBadge" style="display: none;">TRENDING</span>
+                <img id="livePreviewImg" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" alt="Preview" class="bundle-card-img" style="object-fit: contain; background: #07090E;">
+              </div>
+              <div class="bundle-card-body">
+                <div class="bundle-card-meta">
+                  <span class="bundle-category-tag" id="livePreviewCat">AI & Technology</span>
+                  <span class="bundle-reels-tag" id="livePreviewReels">1,300 Reels</span>
+                </div>
+                <div class="bundle-card-title" id="livePreviewTitle" style="min-height: auto; font-size: 0.95rem; margin-bottom: 0.5rem;">
+                  1300+ AI Viral Reels Bundle
+                </div>
+                <div class="bundle-price-row" style="padding-top: 0.45rem;">
+                  <div class="price-stack">
+                    <span class="price-current" id="livePreviewPrice">₹129</span>
+                    <span class="price-original" id="livePreviewOrigPrice" style="display: none;">₹399</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-top: 0.75rem;">
+              <i class="fa-solid fa-circle-check" style="color: #10B981;"></i> What customers see in store
+            </div>
+          </div>
+
+          <!-- RIGHT: ESSENTIAL INPUTS -->
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            
+            <!-- Title -->
+            <div>
+              <label for="formTitle" style="display:block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Bundle Title *</label>
+              <input type="text" id="formTitle" class="etsy-pass-input" placeholder="e.g. 1300+ AI Couple Viral Reels Bundle" required>
+            </div>
+
+            <!-- Category with Quick Pills -->
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.35rem;">
+                <label for="formCategory" style="font-size: 0.82rem; font-weight: 700;">Category</label>
+                <span style="font-size: 0.72rem; color: var(--text-muted);">Click preset or type custom</span>
+              </div>
+              <input type="text" id="formCategory" class="etsy-pass-input" placeholder="e.g. AI & Technology" list="categorySuggestions">
+              <datalist id="categorySuggestions">
+                <option value="AI & Technology">
+                <option value="Software & Tools">
+                <option value="Luxury & Lifestyle">
+                <option value="Animation & Cartoons">
+                <option value="Mega Bundles">
+                <option value="Health & Fitness">
+                <option value="Digital Templates & Guides">
+                <option value="Motivation & Wealth">
+              </datalist>
+              <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.45rem;" id="quickCatPills">
+                <button type="button" class="btn-etsy-filter-pill" style="font-size: 0.72rem; padding: 0.2rem 0.55rem;" data-cat="AI & Technology">AI & Tech</button>
+                <button type="button" class="btn-etsy-filter-pill" style="font-size: 0.72rem; padding: 0.2rem 0.55rem;" data-cat="Animation & Cartoons">Cartoons</button>
+                <button type="button" class="btn-etsy-filter-pill" style="font-size: 0.72rem; padding: 0.2rem 0.55rem;" data-cat="Luxury & Lifestyle">Luxury</button>
+                <button type="button" class="btn-etsy-filter-pill" style="font-size: 0.72rem; padding: 0.2rem 0.55rem;" data-cat="Mega Bundles">Mega</button>
+                <button type="button" class="btn-etsy-filter-pill" style="font-size: 0.72rem; padding: 0.2rem 0.55rem;" data-cat="Software & Tools">Software</button>
+                <button type="button" class="btn-etsy-filter-pill" style="font-size: 0.72rem; padding: 0.2rem 0.55rem;" data-cat="Health & Fitness">Fitness</button>
+              </div>
+            </div>
+
+            <!-- Price & Reels Count in 2 Columns -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+              <div>
+                <label for="formPrice" style="display:block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Price (₹) *</label>
+                <input type="text" id="formPrice" class="etsy-pass-input" placeholder="129" required>
+              </div>
+              <div>
+                <label for="formReelsCount" style="display:block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Reels Count *</label>
+                <input type="number" id="formReelsCount" class="etsy-pass-input" placeholder="1300" min="1" required>
+              </div>
+            </div>
+
+            <!-- Secret Download Link & Unlock Password -->
+            <div style="background: rgba(249, 87, 33, 0.05); border: 1px solid rgba(249, 87, 33, 0.2); border-radius: 10px; padding: 0.95rem;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+                <div>
+                  <label for="formSecretLink" style="display:block; font-size: 0.82rem; font-weight: 800; color: var(--accent-orange); margin-bottom: 0.35rem;">
+                    <i class="fa-solid fa-link"></i> Google Drive Link *
+                  </label>
+                  <input type="url" id="formSecretLink" class="etsy-pass-input" placeholder="https://drive.google.com/..." required>
+                </div>
+
+                <div>
+                  <label for="formPassword" style="display:block; font-size: 0.82rem; font-weight: 800; color: var(--accent-orange); margin-bottom: 0.35rem;">
+                    <i class="fa-solid fa-key"></i> Unlock Password *
+                  </label>
+                  <div style="display: flex; gap: 0.4rem;">
+                    <input type="text" id="formPassword" class="etsy-pass-input" placeholder="e.g. VIRAL250K" required>
+                    <button type="button" id="btnGenPassword" class="btn-etsy-filter-pill" style="padding: 0 0.75rem; font-size: 0.85rem;" title="Generate random password">
+                      <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 0.4rem;">
+                <i class="fa-solid fa-shield-halved"></i> Protected server-side. Customer receives password after WhatsApp payment to unlock link.
+              </span>
+            </div>
+
+            <!-- Thumbnail Upload & Direct URL -->
+            <div>
+              <label style="display:block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Thumbnail Image</label>
+              
+              <div class="uploader-dropzone" id="thumbnailDropzone" style="padding: 1rem;">
+                <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.4rem; color: var(--accent-orange); margin-bottom: 0.2rem;"></i>
+                <p style="font-size: 0.82rem; font-weight: 700;">Drop thumbnail or click to upload</p>
+                <input type="file" id="thumbnailFileInput" accept="image/*" style="display: none;">
+                <div id="uploadProgressWrap" style="display:none; width: 100%; height: 4px; background: var(--border-subtle); border-radius: 9999px; overflow: hidden; margin-top: 0.4rem;">
+                  <div id="uploadProgressFill" style="height: 100%; width: 0%; background: var(--accent-orange); transition: width 0.2s;"></div>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.45rem;">
+                <img src="" id="thumbPreviewImg" style="width: 38px; height: 38px; border-radius: 6px; object-fit: contain; background: #07090E; display: none;" alt="Preview">
+                <input type="url" id="formThumbnailUrl" class="etsy-pass-input" placeholder="Or paste direct image URL (https://...)">
+              </div>
+            </div>
+
+            <!-- Active Storefront Toggle -->
+            <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-subtle); padding: 0.65rem 0.95rem; border-radius: 8px;">
+              <div>
+                <span style="font-weight: 700; font-size: 0.85rem;">Active on Storefront</span>
+                <p style="font-size: 0.72rem; color: var(--text-muted);">Turn off to hide from customer view.</p>
+              </div>
+              <label class="switch-toggle">
+                <input type="checkbox" id="formStatusToggle" checked>
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+
+            <!-- Collapsible Optional Details -->
+            <details style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.65rem 0.95rem; cursor: pointer;">
+              <summary style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); outline: none;">
+                <i class="fa-solid fa-sliders" style="margin-right: 0.35rem;"></i> Optional Details (Strikethrough price, description, tags, rating)
+              </summary>
+              
+              <div style="padding-top: 0.85rem; display: flex; flex-direction: column; gap: 0.75rem; cursor: default;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.65rem;">
+                  <div>
+                    <label for="formOriginalPrice" style="display:block; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.25rem;">Original Price (Strikethrough)</label>
+                    <input type="text" id="formOriginalPrice" class="etsy-pass-input" placeholder="399">
+                  </div>
+                  <div>
+                    <label for="formRating" style="display:block; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.25rem;">Rating (1 to 5)</label>
+                    <input type="number" id="formRating" class="etsy-pass-input" placeholder="5" min="1" max="5" step="0.1" value="5">
+                  </div>
+                  <div>
+                    <label for="formReviewsCount" style="display:block; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.25rem;">Reviews Count</label>
+                    <input type="number" id="formReviewsCount" class="etsy-pass-input" placeholder="120" min="0" value="120">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="formDescription" style="display:block; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.25rem;">Description</label>
+                  <textarea id="formDescription" class="etsy-pass-input" rows="2" placeholder="Summary of bundle contents..."></textarea>
+                </div>
+
+                <div>
+                  <label style="display:block; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.35rem;">Badges & Tags</label>
+                  <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;" id="tagsSelectorGroup">
+                    <label class="btn-etsy-filter-pill" style="cursor: pointer; font-size: 0.75rem;">
+                      <input type="checkbox" value="trending" style="margin-right: 0.25rem;"> Trending
+                    </label>
+                    <label class="btn-etsy-filter-pill" style="cursor: pointer; font-size: 0.75rem;">
+                      <input type="checkbox" value="new" style="margin-right: 0.25rem;"> New
+                    </label>
+                    <label class="btn-etsy-filter-pill" style="cursor: pointer; font-size: 0.75rem;">
+                      <input type="checkbox" value="popular" style="margin-right: 0.25rem;"> Popular
+                    </label>
+                    <label class="btn-etsy-filter-pill" style="cursor: pointer; font-size: 0.75rem;">
+                      <input type="checkbox" value="best-seller" style="margin-right: 0.25rem;"> Best Seller
+                    </label>
+                    <label class="btn-etsy-filter-pill" style="cursor: pointer; font-size: 0.75rem;">
+                      <input type="checkbox" value="limited" style="margin-right: 0.25rem;"> Limited
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Form Actions -->
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem;">
+              <button type="button" class="btn-etsy-filter-pill" id="btnCancelEdit" style="padding: 0.6rem 1.25rem;">Cancel</button>
+              <button type="submit" class="btn-etsy-big-add" id="btnSaveBundle" style="width: auto; padding: 0.6rem 1.75rem; background: var(--accent-orange); font-size: 0.9rem;">
+                <span id="saveBundleBtnText"><i class="fa-solid fa-floppy-disk"></i> Save Bundle</span>
+                <i class="fa-solid fa-circle-notch fa-spin" id="saveBundleSpinner" style="display: none;"></i>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       4. DELETE CONFIRMATION MODAL
+       ======================================================================== -->
+  <div class="etsy-modal-backdrop" id="deleteConfirmModal" aria-hidden="true">
+    <div class="etsy-modal-window" style="max-width: 440px; text-align: center; padding: 2rem;">
+      <div style="width: 52px; height: 52px; border-radius: 50%; background: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1rem;">
+        <i class="fa-solid fa-trash-can"></i>
+      </div>
+      <h3 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem;">Delete Bundle?</h3>
+      <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">
+        Are you sure you want to permanently delete <strong id="deleteBundleTitle" style="color: var(--text-primary);">this bundle</strong>?
+      </p>
+
+      <div style="display: flex; gap: 0.75rem; justify-content: center;">
+        <button type="button" class="btn-etsy-filter-pill" id="cancelDeleteBtn">Cancel</button>
+        <button type="button" class="btn-etsy-big-add" id="confirmDeleteBtn" style="width: auto; padding: 0.6rem 1.25rem; background: #DC2626;">
+          Delete Permanently
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Admin Controller Script -->
+  <script src="admin.js"></script>
+</body>
+</html>

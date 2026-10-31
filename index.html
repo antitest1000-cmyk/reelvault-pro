@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reels Bundle | Digital Download Marketplace - ReelVault PRO</title>
+  <meta name="description" content="Discover viral 4K reels bundles, AI faceless avatars, luxury video assets, and trending hooks. Instant cloud download with direct seller support.">
+  <link rel="canonical" href="https://reelvault.store/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://reelvault.store/">
+  <meta property="og:title" content="Reels Bundle | Digital Download Marketplace - ReelVault PRO">
+  <meta property="og:description" content="Discover viral 4K reels bundles, AI faceless avatars, luxury video assets, and trending hooks. Instant cloud download with direct seller support.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Reels Bundle | Digital Download Marketplace - ReelVault PRO">
+  <meta name="twitter:description" content="Discover viral 4K reels bundles, AI faceless avatars, luxury video assets, and trending hooks.">
+
+  <!-- Anti-Flash Theme Script (Executes before page render) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("reelstore_theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      } else {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts: Playfair Display (Serif) & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+
+  <!-- Top Announcement Bar (SEO, Trust & Conversion Links) -->
+  <aside class="etsy-top-bar" aria-label="Announcement">
+    <div class="container etsy-top-bar-inner">
+      <div class="top-bar-left">
+        <span class="badge-pulsing"><i class="fa-solid fa-bolt"></i> Instant Digital Delivery</span>
+        <span class="top-bar-text">Over 100+ viral reels packs with password-protected Google Drive access!</span>
+      </div>
+      <div class="top-bar-right">
+        <a href="free-sample.html" class="top-bar-link-highlight"><i class="fa-solid fa-gift"></i> 5 Free Sample Reels</a>
+        <a href="tools.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Creator Tools</a>
+        <a href="how-to-buy.html"><i class="fa-solid fa-circle-question"></i> How to Buy</a>
+        <a href="reviews.html"><i class="fa-solid fa-star" style="color: var(--star-fill);"></i> Reviews</a>
+        <a href="https://instagram.com/giveme_8" target="_blank" rel="noopener noreferrer" class="top-bar-link-insta"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i> @giveme_8</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================================================
+       1. TOP HEADER (Sticky, Logo, Categories, Search, Theme Toggle, Wishlist)
+       ======================================================================== -->
+  <header class="etsy-header" id="mainHeader">
+    <div class="container">
+      <div class="etsy-nav-main">
+        
+        <!-- Store Logo (Bold Serif in Orange) -->
+        <a href="index.html" class="etsy-brand-logo" id="brandLogo">
+          ReelVault<small>PRO</small>
+        </a>
+
+        <!-- Categories Button with Hamburger Icon -->
+        <button type="button" class="btn-categories-trigger" id="categoriesMenuBtn" aria-label="Open Categories">
+          <i class="fa-solid fa-bars"></i>
+          <span>Categories</span>
+        </button>
+
+        <!-- Wide Pill-Shaped Search Bar -->
+        <div class="etsy-search-wrapper">
+          <div class="etsy-search-container">
+            <input type="text" id="desktopSearchInput" class="etsy-search-input" placeholder="Search for reels bundles, digital products, Canva guides, AI videos..." value="" autocomplete="off">
+            <button type="button" id="desktopSearchClear" class="etsy-search-clear" aria-label="Clear search">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <button type="button" id="searchSubmitBtn" class="etsy-search-btn" aria-label="Search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Header Actions -->
+        <div class="etsy-nav-right">
+          <!-- Instagram Direct Button -->
+          <a href="https://instagram.com/giveme_8" target="_blank" rel="noopener noreferrer" class="btn-contact-nav" id="navContactSellerBtn" title="Message on Instagram @giveme_8">
+            <i class="fa-brands fa-instagram" style="color: #E1306C; font-size: 1.15rem;"></i>
+            <span>@giveme_8</span>
+          </a>
+
+          <!-- Heart / Wishlist Icon with Count Badge -->
+          <button type="button" class="etsy-icon-btn" id="navWishlistBtn" title="Saved Wishlist">
+            <i class="fa-regular fa-heart"></i>
+            <span class="badge-counter" id="wishlistCounter">0</span>
+          </button>
+
+          <!-- Theme Toggle Button (Sun/Moon) -->
+          <button type="button" class="etsy-icon-btn" id="themeToggleBtn" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       2. HERO SHOWCASE SECTION (High-Converting Digital Marketplace Banner)
+       ======================================================================== -->
+  <section class="store-hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          <span>⚡ India's #1 Viral Reels & Software Marketplace</span>
+        </div>
+        <h1 class="hero-title">Grow & Monetize Your Audience with <span class="gradient-text">Ready-to-Post 4K Reels</span></h1>
+        <p class="hero-subtitle">
+          Over 100+ curated digital video vaults, AI talking avatars, motivational reels & creative editing software. Direct Instagram DM purchase with instant Google Drive password unlock.
+        </p>
+        
+        <div class="hero-stats-row">
+          <div class="hero-stat-item">
+            <span class="hero-stat-val">100+</span>
+            <span class="hero-stat-lbl">Active Bundles</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-val">4K HD</span>
+            <span class="hero-stat-lbl">Vertical 9:16</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-val">4.9 ★</span>
+            <span class="hero-stat-lbl">2,500+ Creators</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-val">1-Min</span>
+            <span class="hero-stat-lbl">Instant Delivery</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       3. RESULTS AREA (Filter Chips, Sort Dropdown & Responsive Product Grid)
+       ======================================================================== -->
+  <main class="container" id="resultsArea">
+    
+    <!-- Interactive Demo Mode Notice (Active when live Apps Script is not configured) -->
+    <div id="demoModeBanner" style="display:none; background: var(--accent-orange-light); border: 1px solid var(--accent-orange); border-radius: 8px; padding: 0.75rem 1.25rem; margin-top: 1.25rem; font-size: 0.88rem; color: var(--text-primary); align-items: center; justify-content: space-between;">
+      <span><i class="fa-solid fa-circle-info" style="color: var(--accent-orange);"></i> <strong>Demo Preview Active:</strong> Live digital products catalog loaded.</span>
+      <button type="button" id="closeDemoBannerBtn" style="color: inherit; font-size: 1.2rem; cursor: pointer;">&times;</button>
+    </div>
+
+    <div class="etsy-catalog-header">
+      
+      <!-- Catalog Heading -->
+      <div class="etsy-header-row">
+        <div>
+          <h2 class="etsy-main-title">Explore All Creator Bundles</h2>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 0.2rem;">Choose your niche, preview clips, and unlock instant Google Drive access.</p>
+        </div>
+        <span class="etsy-results-badge" id="resultsCount">Loading bundles...</span>
+      </div>
+
+      <!-- Pill-Shaped Filter Chips Bar -->
+      <div class="etsy-filters-row">
+        <div class="etsy-pill-chips-group" id="filterPillsGroup">
+          <button type="button" class="etsy-filter-pill active" data-filter="all">All</button>
+          <button type="button" class="etsy-filter-pill" data-filter="trending">Trending 🔥</button>
+          <button type="button" class="etsy-filter-pill" data-filter="AI & Technology">AI & Tech 🤖</button>
+          <button type="button" class="etsy-filter-pill" data-filter="Software & Tools">Software & Tools 💻</button>
+          <button type="button" class="etsy-filter-pill" data-filter="Luxury & Lifestyle">Luxury & Cars 🏎️</button>
+          <button type="button" class="etsy-filter-pill" data-filter="Animation & Cartoons">Cartoons & Anime 🎨</button>
+          <button type="button" class="etsy-filter-pill" data-filter="Mega Bundles">Mega Bundles 🚀</button>
+          <button type="button" class="etsy-filter-pill" data-filter="Digital Templates & Guides">Templates & Guides 📋</button>
+          <button type="button" class="etsy-filter-pill" data-filter="Health & Fitness">Fitness & Health 💪</button>
+          <button type="button" class="etsy-filter-pill" data-filter="Motivation & Wealth">Motivation & Wealth 💰</button>
+          <button type="button" class="etsy-filter-pill" data-filter="Gaming & Esports">Gaming 🎮</button>
+          <button type="button" class="etsy-filter-pill" data-filter="under-200">Under ₹200 💎</button>
+          <button type="button" class="etsy-filter-pill" data-filter="wishlist">Wishlist ❤️</button>
+        </div>
+
+        <!-- Sort by Relevance Dropdown Pill on the Far Right -->
+        <div class="etsy-sort-pill">
+          <label for="sortDropdown"><i class="fa-solid fa-arrow-down-wide-short"></i> Sort by:</label>
+          <select id="sortDropdown" class="etsy-sort-select">
+            <option value="featured">Relevance / Custom</option>
+            <option value="newest">Newest</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="reels-desc">Most Reels</option>
+            <option value="top-rated">Top Rated</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 4-Column Product Grid (Borderless cards) -->
+    <div class="etsy-products-grid" id="productGrid">
+      <!-- Skeleton Loaders (Rendered initially) -->
+      <div class="skeleton-card">
+        <div class="skeleton-media"></div>
+        <div class="skeleton-line" style="width: 80%;"></div>
+        <div class="skeleton-line" style="width: 50%;"></div>
+        <div class="skeleton-line" style="width: 60%;"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton-media"></div>
+        <div class="skeleton-line" style="width: 80%;"></div>
+        <div class="skeleton-line" style="width: 50%;"></div>
+        <div class="skeleton-line" style="width: 60%;"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton-media"></div>
+        <div class="skeleton-line" style="width: 80%;"></div>
+        <div class="skeleton-line" style="width: 50%;"></div>
+        <div class="skeleton-line" style="width: 60%;"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton-media"></div>
+        <div class="skeleton-line" style="width: 80%;"></div>
+        <div class="skeleton-line" style="width: 50%;"></div>
+        <div class="skeleton-line" style="width: 60%;"></div>
+      </div>
+    </div>
+
+    <!-- Friendly Empty State -->
+    <div id="emptyState" style="display:none; text-align: center; padding: 4rem 1rem; border: 1px dashed var(--border-subtle); border-radius: 12px; margin: 2rem 0;">
+      <i class="fa-solid fa-film" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 0.75rem;"></i>
+      <h3 style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">No Bundles Found</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">We couldn't find any bundle matching your filter or search query.</p>
+      <button type="button" class="etsy-filter-pill" id="resetFiltersBtn">Reset All Filters</button>
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-wrapper" id="loadMoreContainer" style="display: none;">
+      <button type="button" class="btn-load-more" id="loadMoreBtn">
+        <i class="fa-solid fa-spinner fa-spin" id="loadMoreSpinner" style="display: none; margin-right: 0.4rem;"></i>
+        <span>Load More Bundles</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ========================================================================
+       3. "HOW IT WORKS" 3-STEP STRIP
+       ======================================================================== -->
+  <section class="how-it-works-strip" id="howItWorks">
+    <div class="container">
+      <div class="hiw-header">
+        <span class="hiw-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Simple 3-Step Process</span>
+        <h3 class="hiw-title">How To Buy & Unlock Your Bundle</h3>
+        <p class="hiw-subtitle">Instant digital access directly to Google Drive with verified password unlock — no waiting or complicated logins.</p>
+      </div>
+      
+      <div class="hiw-grid">
+        <!-- Step 1 -->
+        <div class="hiw-card">
+          <span class="hiw-step-num">01</span>
+          <div class="hiw-icon hiw-icon-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <h4 class="hiw-card-title">1. Choose Your Bundle</h4>
+          <p class="hiw-card-desc">Browse our curated collections of viral reels across AI, Luxury, Fitness, Motivation, Software, and Aesthetics.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="hiw-card">
+          <span class="hiw-step-num">02</span>
+          <div class="hiw-icon hiw-icon-ig">
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+          <h4 class="hiw-card-title">2. Contact & Pay</h4>
+          <p class="hiw-card-desc">Click "Buy" to message us on Instagram DM with your pre-filled bundle details. Pay safely via UPI, QR, or Card.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="hiw-card">
+          <span class="hiw-step-num">03</span>
+          <div class="hiw-icon hiw-icon-key">
+            <i class="fa-solid fa-key"></i>
+          </div>
+          <h4 class="hiw-card-title">3. Enter Password & Unlock</h4>
+          <p class="hiw-card-desc">Receive your unique unlock password, enter it into the bundle unlock drawer, and instantly access your Google Drive link!</p>
+        </div>
+      </div>
+
+      <!-- Trust highlights strip -->
+      <div class="hiw-trust-bar">
+        <div class="hiw-trust-item"><i class="fa-solid fa-bolt" style="color: #F59E0B;"></i> <span>Instant Google Drive Delivery</span></div>
+        <div class="hiw-trust-item"><i class="fa-solid fa-shield-halved" style="color: #10B981;"></i> <span>Server-Side Password Auth</span></div>
+        <div class="hiw-trust-item"><i class="fa-solid fa-infinity" style="color: #6366F1;"></i> <span>Lifetime Re-download Access</span></div>
+        <div class="hiw-trust-item"><i class="fa-solid fa-headset" style="color: #EC4899;"></i> <span>Direct Instagram Creator Support</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       4. PRODUCT DETAIL MODAL / LISTING PAGE
+       ======================================================================== -->
+  <div class="etsy-modal-backdrop" id="productModalBackdrop" aria-hidden="true" role="dialog">
+    <div class="etsy-modal-window" id="productModal">
+      
+      <!-- Close Button -->
+      <button type="button" class="etsy-modal-close" id="modalCloseBtn" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="etsy-modal-grid">
+        
+        <!-- Left Column: Single Premium Framed Image Preview -->
+        <div class="etsy-modal-media-col">
+          <div class="modal-main-image-wrap">
+            <div class="badge-card-corner badge-bestseller" id="modalBestsellerBadge">
+              <i class="fa-solid fa-ribbon"></i> Best Seller
+            </div>
+            <button type="button" class="btn-modal-heart" id="modalHeartBtn" aria-label="Save to Wishlist">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <img src="" alt="Bundle Preview" id="modalImage" class="modal-main-image">
+          </div>
+
+          <!-- Feature Bullets Under Image -->
+          <div class="modal-features-list">
+            <div class="modal-feature-item"><i class="fa-solid fa-bolt" style="color: #F59E0B;"></i> Instant Google Drive Download</div>
+            <div class="modal-feature-item"><i class="fa-solid fa-certificate" style="color: #10B981;"></i> Commercial License Included</div>
+            <div class="modal-feature-item"><i class="fa-solid fa-mobile-screen" style="color: #3B82F6;"></i> 4K 9:16 Vertical HD (No Watermark)</div>
+            <div class="modal-feature-item"><i class="fa-solid fa-infinity" style="color: #8B5CF6;"></i> Lifetime Access & Free Updates</div>
+          </div>
+        </div>
+
+        <!-- Right Side: Details & Actions -->
+        <div class="etsy-modal-info-col">
+          <div class="hero-badge" style="margin-bottom: 0.6rem; padding: 0.25rem 0.75rem;">
+            <i class="fa-solid fa-fire"></i> In High Demand • Instant Delivery
+          </div>
+
+          <h2 class="etsy-modal-title" id="modalTitle">Bundle Title</h2>
+
+          <!-- Rating & Reels Count -->
+          <div class="modal-rating-row">
+            <span class="star-rating" id="modalStarRating">★★★★★</span>
+            <span class="rating-count" id="modalReviewCount">(179 reviews)</span>
+            <span style="color: var(--text-muted);">&bull;</span>
+            <span style="font-weight: 800; color: var(--accent-orange);" id="modalReelsCountBadge">250,000+ Reels</span>
+          </div>
+
+          <!-- Price with strikethrough & discount -->
+          <div class="modal-price-row">
+            <div>
+              <span class="modal-price-current" id="modalPrice">₹175</span>
+              <span class="modal-price-original" id="modalOriginalPrice">₹681</span>
+            </div>
+            <div class="modal-price-discount" id="modalDiscountTag">
+              70% off &bull; Sale ends soon
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 1rem;">
+            <i class="fa-solid fa-cloud-arrow-down" style="color: var(--accent-orange);"></i>
+            <span>Digital Download (Instant Cloud Access via Google Drive)</span>
+          </div>
+
+          <!-- Description -->
+          <p class="etsy-modal-description" id="modalDescription">
+            Bundle description and contents overview.
+          </p>
+
+          <!-- Primary Instagram Buy Button -->
+          <a href="https://ig.me/m/giveme_8" class="btn-etsy-big-add btn-instagram-buy" id="modalBuyNowBtn" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-instagram" style="font-size: 1.35rem;"></i>
+            <span>Message @giveme_8 to Buy</span>
+          </a>
+
+          <!-- Secondary Password Toggle Button -->
+          <button type="button" class="btn-etsy-unlock-toggle" id="toggleUnlockBoxBtn">
+            <i class="fa-solid fa-key" style="color: var(--accent-orange);"></i>
+            <span>Already paid? Enter password to unlock</span>
+          </button>
+
+          <!-- Dedicated Bundle Page Link for SEO & Direct Link Sharing -->
+          <a href="#" id="modalDedicatedPageLink" class="btn-etsy-unlock-toggle" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.45rem; color: var(--text-secondary);" target="_blank">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>Open Dedicated Page & Full Specs</span>
+          </a>
+
+          <!-- Share this Bundle Button -->
+          <button type="button" class="btn-etsy-unlock-toggle" id="modalShareBtn" style="color: #0284C7; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.45rem;">
+            <i class="fa-solid fa-share-nodes"></i>
+            <span>Share this Bundle (WhatsApp, Telegram, Copy)</span>
+          </button>
+
+          <!-- Password Unlock Section -->
+          <div class="etsy-unlock-box" id="unlockBoxContainer">
+            <label for="unlockPasswordInput" style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.2rem;">
+              Enter Unlock Password
+            </label>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+              Enter the password sent to you after personal payment to unlock your download link:
+            </p>
+
+            <div id="demoPasswordHint" style="display:none; font-size: 0.78rem; background: var(--accent-orange-light); border: 1px dashed var(--accent-orange); padding: 0.35rem 0.65rem; border-radius: 4px; margin-bottom: 0.65rem;">
+              <i class="fa-solid fa-lightbulb"></i> Demo Password: <code id="demoPasswordCode" style="font-weight: 700;"></code>
+            </div>
+
+            <div class="unlock-input-container">
+              <input type="text" id="unlockPasswordInput" class="etsy-pass-input" placeholder="e.g. VIRAL250K" autocomplete="off">
+              <button type="button" id="unlockSubmitBtn" class="btn-etsy-pass-submit">
+                <span id="unlockBtnText">Unlock</span>
+                <i class="fa-solid fa-circle-notch fa-spin" id="unlockSpinner" style="display: none;"></i>
+              </button>
+            </div>
+
+            <p id="unlockErrorMsg" style="display: none; color: var(--text-urgency); font-size: 0.82rem; margin-top: 0.5rem;"></p>
+
+            <div id="unlockResultContainer" style="display: none; margin-top: 0.85rem; background: rgba(16, 185, 129, 0.12); border: 1px solid #10B981; border-radius: 8px; padding: 1rem; text-align: center;">
+              <div style="font-size: 1.4rem; color: #10B981; margin-bottom: 0.3rem;">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+              <strong style="color: var(--text-primary); font-size: 0.95rem;">Password Verified! Bundle Unlocked</strong>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem;">Click below to access your Google Drive download link:</p>
+
+              <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.75rem;">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="btn-etsy-big-add" id="unlockedLinkBtn" style="padding: 0.55rem 1.15rem; font-size: 0.85rem; width: auto; background: #10B981;">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Bundle
+                </a>
+                <button type="button" class="btn-etsy-unlock-toggle" id="copyLinkBtn" style="padding: 0.55rem 1rem; margin-top: 0; font-size: 0.85rem; width: auto;">
+                  <i class="fa-regular fa-copy"></i> <span id="copyLinkBtnText">Copy Link</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust Row -->
+          <div class="etsy-trust-row">
+            <div class="etsy-trust-item">
+              <i class="fa-solid fa-bolt" style="color: var(--accent-orange);"></i>
+              <span>Instant access after payment</span>
+            </div>
+            <div class="etsy-trust-item">
+              <i class="fa-solid fa-user-check" style="color: #10B981;"></i>
+              <span>Personal support</span>
+            </div>
+            <div class="etsy-trust-item">
+              <i class="fa-solid fa-infinity" style="color: #3B82F6;"></i>
+              <span>Lifetime access</span>
+            </div>
+          </div>
+
+          <!-- Payment Modes Badge -->
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px dashed var(--border-color); text-align: center;">
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">
+              <i class="fa-solid fa-shield-halved" style="color: #10B981; margin-right: 4px;"></i> Accepted Direct Payment Modes
+            </div>
+            <img src="https://betterbundle.in/wp-content/themes/woodmart/images/payments.png" alt="Accepted Payment Modes: UPI, GPay, PhonePe, Paytm, Cards" style="max-height: 24px; width: auto; opacity: 0.88; display: inline-block;">
+          </div>
+
+        </div>
+
+      </div><!-- /.etsy-modal-grid -->
+
+      <!-- You May Also Like Random Bundles Strip in Modal -->
+      <div class="modal-related-section" id="modalRelatedSection" style="margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+          <h4 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 0.45rem;">
+            <i class="fa-solid fa-sparkles" style="color: var(--accent-orange);"></i>
+            <span>You May Also Like</span>
+          </h4>
+          <button type="button" class="ai-preset-btn" id="btnShuffleModalRelated" style="padding: 0.35rem 0.85rem; font-size: 0.78rem; border-radius: var(--radius-pill); cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+            <i class="fa-solid fa-shuffle" style="color: var(--accent-orange);"></i> <span>Shuffle Random</span>
+          </button>
+        </div>
+        <div class="modal-related-grid" id="modalRelatedGrid">
+          <!-- Dynamically populated with random bundles by app.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ========================================================================
+       5. FOOTER (Multi-column Shop, Help, Contact, Social, Disclaimer)
+       ======================================================================== -->
+  <footer class="etsy-footer" id="mainFooter">
+    <div class="container">
+      <div class="footer-columns">
+        
+        <!-- Col 1: Brand & Bio -->
+        <div class="footer-col footer-col-brand">
+          <div class="footer-brand-header">
+            <div class="footer-logo">
+              <i class="fa-solid fa-layer-group"></i>
+              <span>ReelVault<strong style="color: var(--accent-orange);">PRO</strong></span>
+            </div>
+            <span class="footer-pill-tag"><i class="fa-solid fa-circle-check"></i> India's #1 Reels Store</span>
+          </div>
+          <p class="footer-brand-desc">
+            Curated viral reels marketplace for short-form content creators, agencies, and brands. High retention 9:16 vertical video assets with lifetime cloud access and direct personal seller delivery.
+          </p>
+          <div class="footer-social-box">
+            <a href="https://instagram.com/giveme_8" target="_blank" rel="noopener noreferrer" class="footer-ig-badge">
+              <i class="fa-brands fa-instagram"></i>
+              <div class="footer-ig-text">
+                <span class="footer-ig-sub">Official Instagram</span>
+                <span class="footer-ig-handle">@giveme_8</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Category Landing Pages (SEO/AEO/GEO) -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Creator Niches</h4>
+          <ul class="footer-nav-list">
+            <li><a href="ai-reels-bundle.html">⚡ AI Talking Avatars</a></li>
+            <li><a href="faceless-reels-bundle.html">🎭 Faceless Motivation</a></li>
+            <li><a href="luxury-reels-bundle.html">🏎️ Luxury & Supercars</a></li>
+            <li><a href="motivational-reels-bundle.html">💪 Fitness & Gym Motivation</a></li>
+            <li><a href="cooking-reels-bundle.html">🍳 Cooking & ASMR Food</a></li>
+            <li><a href="#resultsArea" data-footer-filter="mega">🚀 80M+ Mega Vault</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Creator Hub & Growth -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Creator Hub</h4>
+          <ul class="footer-nav-list">
+            <li><a href="free-sample.html">🎁 5 Free Sample Reels</a></li>
+            <li><a href="tools.html">🛠️ Free Creator Tools</a></li>
+            <li><a href="how-to-buy.html">📖 How to Buy Guide</a></li>
+            <li><a href="reviews.html">⭐ Customer Proof & Reviews</a></li>
+            <li><a href="affiliate.html">🤝 Affiliate & Reseller (40%)</a></li>
+            <li><a href="request-bundle.html">💡 Request a Custom Bundle</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Trust, Legal & Support -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Trust & Support</h4>
+          <ul class="footer-nav-list" style="margin-bottom: 1rem;">
+            <li><a href="faq.html">❓ Frequently Asked Questions</a></li>
+            <li><a href="about.html">👤 About Founder & Story</a></li>
+            <li><a href="license.html">📜 Commercial PLR/MRR License</a></li>
+            <li><a href="policies.html">🛡️ Lifetime Link Replacement</a></li>
+            <li><a href="contact.html">💬 Contact Support</a></li>
+          </ul>
+          <div class="footer-contact-cards">
+            <a href="https://ig.me/m/giveme_8" target="_blank" rel="noopener noreferrer" class="footer-contact-item" id="footerInstagramDmLink">
+              <i class="fa-brands fa-instagram" style="color: #E1306C; font-size: 1.25rem;"></i>
+              <div>
+                <span class="contact-label">Instagram DM</span>
+                <span class="contact-val">@giveme_8</span>
+              </div>
+              <span class="contact-status-dot" title="Active now"></span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom Bar -->
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright">
+          &copy; <span id="currentYear"></span> <strong>ReelVault PRO</strong>. All rights reserved. Built for content creators & agencies.
+        </div>
+        <div class="footer-payments-wrapper">
+          <span class="footer-payments-text">Accepted Payments:</span>
+          <img src="https://betterbundle.in/wp-content/themes/woodmart/images/payments.png" alt="Accepted Payment Methods: UPI, GPay, PhonePe, Paytm, Cards" class="footer-payments-img">
+        </div>
+        <a href="#top" class="footer-back-to-top" id="backToTopBtn" title="Back to top">
+          <span>Back to Top</span>
+          <i class="fa-solid fa-arrow-up"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Instagram Direct Contact Button -->
+  <a href="https://ig.me/m/giveme_8" target="_blank" rel="noopener noreferrer" class="floating-instagram-btn" id="floatingInstagramBtn" title="Message @giveme_8 on Instagram">
+    <i class="fa-brands fa-instagram"></i>
+    <span>DM @giveme_8</span>
+  </a>
+
+  <!-- Universal Link Sharing Modal -->
+  <div class="share-modal-backdrop" id="shareModalBackdrop">
+    <div class="share-modal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+      <button type="button" class="share-modal-close" id="shareModalCloseBtn" aria-label="Close share dialog">&times;</button>
+      <div class="share-modal-title" id="shareModalTitle">
+        <i class="fa-solid fa-share-nodes" style="color: var(--accent-orange);"></i>
+        <span>Share Bundle Link</span>
+      </div>
+      <p class="share-modal-subtitle">Share this viral video collection with friends, creators, or client pages:</p>
+
+      <!-- Dynamic Live Social Preview Card -->
+      <div class="share-preview-card">
+        <img src="" alt="" id="sharePreviewImg" class="share-preview-thumb">
+        <div class="share-preview-info">
+          <div class="share-preview-title" id="sharePreviewTitle">Bundle Title</div>
+          <div class="share-preview-desc" id="sharePreviewDesc">4K vertical 9:16 reels for Instagram and YouTube Shorts.</div>
+          <div class="share-preview-meta">
+            <span id="sharePreviewReelsCount">500+ Reels</span>
+            <span>•</span>
+            <span id="sharePreviewPrice">₹129</span>
+            <span>•</span>
+            <span style="color:#10B981;"><i class="fa-solid fa-circle-check"></i> Instant Delivery</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Social Sharing Pills -->
+      <div class="share-pills-grid">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="share-pill-btn share-pill-whatsapp" id="shareWhatsAppBtn">
+          <i class="fa-brands fa-whatsapp" style="font-size: 1.15rem;"></i>
+          <span>WhatsApp</span>
+        </a>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="share-pill-btn share-pill-telegram" id="shareTelegramBtn">
+          <i class="fa-brands fa-telegram" style="font-size: 1.15rem;"></i>
+          <span>Telegram</span>
+        </a>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="share-pill-btn share-pill-x" id="shareTwitterBtn">
+          <i class="fa-brands fa-x-twitter" style="font-size: 1.15rem;"></i>
+          <span>X / Twitter</span>
+        </a>
+        <button type="button" class="share-pill-btn share-pill-native" id="shareNativeBtn">
+          <i class="fa-solid fa-arrow-up-from-bracket" style="font-size: 1.1rem;"></i>
+          <span>More Apps</span>
+        </button>
+      </div>
+
+      <!-- Copy Direct Link Bar -->
+      <div class="share-link-copy-box">
+        <input type="text" id="shareDirectLinkInput" class="share-link-input" readonly>
+        <button type="button" id="shareCopyTriggerBtn" class="share-copy-trigger">
+          <i class="fa-regular fa-copy"></i> <span id="shareCopyBtnLabel">Copy Link</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Storefront Controller Script -->
+  <script src="app.js"></script>
+</body>
+</html>
