@@ -3734,16 +3734,131 @@ input:checked + .switch-slider:before {
    19. MOBILE-FIRST PHONE OPTIMIZATIONS (360px - 768px Viewports)
    ========================================================================== */
 
-/* Touch Target Minimum Sizing (Apple 44x44px & Material 48dp compliant) */
+/* Touch Target Minimum Sizing for Text & Bar Buttons */
 @media (max-width: 768px) {
-  button, .btn-categories-trigger, .etsy-icon-btn, .btn-contact-nav, .etsy-filter-pill, .bundle-share-btn, .tool-action-btn {
+  .btn-categories-trigger, .btn-contact-nav, .etsy-filter-pill, .bundle-share-btn, .tool-action-btn, .btn-load-more, .bundle-mobile-bar-btn {
     min-height: 44px;
     touch-action: manipulation;
   }
 
+  /* =========================================================================
+     PERFECT CIRCULAR ICON BUTTONS (Zero Oval Distortion on Phones)
+     ========================================================================= */
+  .etsy-search-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn-contact-nav {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn-contact-nav span {
+    display: none !important;
+  }
+
   .etsy-icon-btn {
-    min-width: 44px;
-    min-height: 44px;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn-card-favorite {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+    max-width: 26px !important;
+    max-height: 26px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .floating-instagram-btn, .floating-whatsapp-btn {
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
+    min-height: 52px !important;
+    max-width: 52px !important;
+    max-height: 52px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .etsy-modal-close, .share-modal-close {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .etsy-nav-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    flex-shrink: 0 !important;
   }
 
   /* Compact Container Padding on Mobile */
@@ -3804,6 +3919,16 @@ input:checked + .switch-slider:before {
     right: 0.25rem !important;
     width: 24px !important;
     height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     font-size: 0.68rem !important;
     background: rgba(11, 15, 23, 0.85) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
